@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>UI Mockup – Halaman Pengajuan SPR JTI Polinema</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #f0f2f5; font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; }
+.label-page { background: #1a1a2e; color: #fff; text-align: center; padding: 10px; font-size: 15px; font-weight: bold; }
+.label-sub { background: #c0105a; color: #fff; text-align: center; padding: 5px; font-size: 12px; }
+.shell { display: flex; height: calc(100vh - 60px); min-height: 600px; }
+.sidebar { width: 220px; background: #1a1a2e; color: #ccc; flex-shrink: 0; }
+.sidebar .brand { padding: 16px; font-size: 14px; font-weight: bold; color: #fff; border-bottom: 1px solid #333; }
+.sidebar .brand span { font-size: 11px; font-weight: normal; color: #888; display: block; }
+.sidebar nav a { display: block; padding: 10px 18px; color: #aaa; text-decoration: none; font-size: 12px; border-left: 3px solid transparent; }
+.sidebar nav a.active { background: #2a2d4a; color: #fff; border-left-color: #c0105a; }
+.sidebar nav a:hover { background: #22253e; }
+.sidebar nav .group { font-size: 10px; color: #666; padding: 10px 18px 4px; text-transform: uppercase; letter-spacing: 1px; }
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: #fff; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e0e0e0; }
+.topbar .title { font-size: 15px; font-weight: bold; color: #1a1a2e; }
+.topbar .user { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #555; }
+.topbar .user .avatar { width: 32px; height: 32px; background: #c0105a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; }
+.content { flex: 1; overflow-y: auto; padding: 16px; }
+/* Breadcrumb */
+.breadcrumb { font-size: 11px; color: #888; margin-bottom: 12px; }
+.breadcrumb a { color: #3a5bd9; text-decoration: none; }
+/* Table card -->
+.card { background: #fff; border-radius: 8px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0; }
+.card-header h3 { font-size: 13px; font-weight: bold; color: #1a1a2e; }
+.btn { display: inline-block; padding: 6px 14px; border-radius: 5px; font-size: 11px; font-weight: bold; cursor: pointer; border: none; }
+.btn-primary { background: #c0105a; color: #fff; }
+.btn-outline { background: transparent; border: 1px solid #ccc; color: #555; }
+/* Search/filter bar */
+.filter-bar { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; }
+.filter-bar input, .filter-bar select { padding: 6px 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 11px; color: #333; }
+.filter-bar input { flex: 1; }
+table { width: 100%; border-collapse: collapse; font-size: 11px; }
+th { text-align: left; padding: 7px 10px; background: #f8f9fc; color: #666; font-weight: 600; border-bottom: 1.5px solid #e8e8e8; }
+td { padding: 7px 10px; border-bottom: 1px solid #f5f5f5; color: #333; vertical-align: middle; }
+tr:hover td { background: #fafbff; }
+.badge { display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 10px; font-weight: bold; white-space: nowrap; }
+.badge.diajukan { background: #f0e8ff; color: #7b30e0; }
+.badge.diterima { background: #d0f5d0; color: #1a7a1a; }
+.badge.ditolak { background: #ffe0e0; color: #e04040; }
+.badge.akan { background: #e8f4ff; color: #3a5bd9; }
+.badge.berlangsung { background: #fff0d0; color: #d06000; }
+.badge.selesai { background: #d0f5d0; color: #1a7a1a; }
+.badge.ditinjau { background: #f0e8ff; color: #7b30e0; }
+.action-btn { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 10px; cursor: pointer; border: 1px solid; margin-right: 3px; }
+.action-view { border-color: #3a5bd9; color: #3a5bd9; background: #eef2ff; }
+.action-edit { border-color: #c8a600; color: #c8a600; background: #fffce0; }
+.action-approve { border-color: #1a7a1a; color: #1a7a1a; background: #e8ffe8; }
+.action-reject { border-color: #e04040; color: #e04040; background: #fff0f0; }
+/* Timeline sidebar -->
+.timeline-box { background: #fff; border-radius: 8px; padding: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.timeline-box h3 { font-size: 12px; font-weight: bold; color: #1a1a2e; margin-bottom: 10px; }
+.tl-item { display: flex; gap: 10px; margin-bottom: 10px; }
+.tl-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+.tl-dot.done { background: #d0f5d0; }
+.tl-dot.pending { background: #e8f4ff; }
+.tl-dot.rejected { background: #ffe0e0; }
+.tl-body .tl-title { font-size: 11px; font-weight: bold; color: #1a1a2e; }
+.tl-body .tl-sub { font-size: 10px; color: #888; }
+.tl-connector { width: 2px; height: 14px; background: #e0e0e0; margin-left: 13px; }
+.layout2 { display: grid; grid-template-columns: 1fr 280px; gap: 14px; }
+</style>
+</head>
+<body>
+<div class="label-page">Desain Antarmuka – Halaman Daftar Pengajuan Peminjaman</div>
+<div class="label-sub">Sistem Peminjaman Ruangan JTI Polinema | Tampilan Peminjam (DSN/TDK/MHS)</div>
+
+<div class="shell">
+  <div class="sidebar">
+    <div class="brand">SPR JTI Polinema <span>Sistem Peminjaman Ruangan</span></div>
+    <nav>
+      <div class="group">Utama</div>
+      <a href="#">📊 Dashboard</a>
+      <a href="#">📅 Jadwal Ruangan</a>
+      <a href="#" class="active">📋 Pengajuan Saya</a>
+      <a href="#">📁 Riwayat Pengajuan</a>
+      <div class="group">Informasi</div>
+      <a href="#">🏫 Daftar Ruangan</a>
+      <a href="#">📅 Jadwal Pribadi</a>
+      <div class="group">Akun</div>
+      <a href="#">👤 Profil</a>
+      <a href="#">🚪 Keluar</a>
+    </nav>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div class="title">📋 Pengajuan Peminjaman Ruangan</div>
+      <div class="user">
+        <div class="avatar">B</div>
+        <div>Budi Santoso <small style="display:block;color:#999">Mahasiswa · HMTI</small></div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="breadcrumb"><a href="#">Dashboard</a> › Pengajuan Peminjaman</div>
+
+      <div class="layout2">
+        <!-- Left: Table -->
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <h3>📋 Daftar Pengajuan Saya</h3>
+              <button class="btn btn-primary">＋ Ajukan Peminjaman Baru</button>
+            </div>
+            <div class="filter-bar">
+              <input type="text" placeholder="🔍 Cari nama kegiatan...">
+              <select><option>Semua Status</option><option>Diajukan</option><option>Diterima</option><option>Ditolak</option></select>
+              <select><option>Periode 2024/2025 Genap</option><option>Periode 2024/2025 Ganjil</option></select>
+            </div>
+            <table>
+              <tr>
+                <th>#</th><th>Nama Kegiatan</th><th>Tanggal</th><th>Ruangan</th><th>Org.</th><th>Status Pengajuan</th><th>Status Jadwal</th><th>Aksi</th>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Rapat Himpunan Mahasiswa TI</td>
+                <td>15 Jul 2026</td>
+                <td>Aula JTI</td>
+                <td>HMTI</td>
+                <td><span class="badge diterima">Diterima</span></td>
+                <td><span class="badge selesai">Selesai</span></td>
+                <td>
+                  <span class="action-btn action-view">👁 Detail</span>
+                  <span class="action-btn action-view" style="border-color:#c0105a;color:#c0105a;background:#fff0f5">🖨 Surat</span>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Workshop Pengembangan Web</td>
+                <td>20 Jul 2026</td>
+                <td>Lab A, Lab B</td>
+                <td>HMTI</td>
+                <td><span class="badge diterima">Diterima</span></td>
+                <td><span class="badge berlangsung">Berlangsung</span></td>
+                <td>
+                  <span class="action-btn action-view">👁 Detail</span>
+                  <span class="action-btn action-approve">📷 Dok. Selesai</span>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Seminar Nasional IoT</td>
+                <td>28 Jul 2026</td>
+                <td>Aula JTI</td>
+                <td>HMTI</td>
+                <td><span class="badge diajukan">Diajukan</span></td>
+                <td><span class="badge" style="background:#f5f5f5;color:#999">-</span></td>
+                <td>
+                  <span class="action-btn action-view">👁 Detail</span>
+                  <span class="action-btn action-edit">✏ Edit</span>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Pelatihan Figma &amp; UI Design</td>
+                <td>01 Agu 2026</td>
+                <td>L301</td>
+                <td>HMTI</td>
+                <td><span class="badge ditolak">Ditolak</span></td>
+                <td><span class="badge" style="background:#f5f5f5;color:#999">-</span></td>
+                <td>
+                  <span class="action-btn action-view">👁 Detail</span>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Rapat Kepanitiaan Wisuda</td>
+                <td>05 Agu 2026</td>
+                <td>R. Sidang</td>
+                <td>HMTI</td>
+                <td><span class="badge diterima">Diterima</span></td>
+                <td><span class="badge akan">Akan Datang</span></td>
+                <td>
+                  <span class="action-btn action-view">👁 Detail</span>
+                  <span class="action-btn action-view" style="border-color:#c0105a;color:#c0105a;background:#fff0f5">🖨 Surat</span>
+                </td>
+              </tr>
+            </table>
+            <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:10px;color:#888">Menampilkan 5 dari 12 data</span>
+              <div style="display:flex;gap:4px">
+                <span class="action-btn action-view">‹ Prev</span>
+                <span class="action-btn action-approve" style="border-color:#3a5bd9;color:#fff;background:#3a5bd9">1</span>
+                <span class="action-btn action-view">2</span>
+                <span class="action-btn action-view">Next ›</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Timeline -->
+        <div>
+          <div class="timeline-box">
+            <h3>🔄 Timeline Approval – Seminar Nasional IoT</h3>
+            <p style="font-size:10px;color:#888;margin-bottom:12px">Tgl: 28 Jul 2026 | Aula JTI | HMTI</p>
+
+            <div class="tl-item">
+              <div class="tl-dot done">✅</div>
+              <div class="tl-body">
+                <div class="tl-title">Submit Pengajuan</div>
+                <div class="tl-sub">Budi Santoso · 25 Jul 2026, 09:15</div>
+              </div>
+            </div>
+            <div class="tl-connector"></div>
+            <div class="tl-item">
+              <div class="tl-dot done">✅</div>
+              <div class="tl-body">
+                <div class="tl-title">Verifikator Tahap 1 – Setuju</div>
+                <div class="tl-sub">Ketua HMTI (Mhs) · 25 Jul 2026, 10:30</div>
+              </div>
+            </div>
+            <div class="tl-connector"></div>
+            <div class="tl-item">
+              <div class="tl-dot pending">⏳</div>
+              <div class="tl-body">
+                <div class="tl-title">Verifikator Tahap 2 – Menunggu</div>
+                <div class="tl-sub">Pembina HMTI (DSN) · Batas: 27 Jul 2026</div>
+              </div>
+            </div>
+            <div class="tl-connector"></div>
+            <div class="tl-item">
+              <div class="tl-dot pending" style="background:#f5f5f5">⏸</div>
+              <div class="tl-body">
+                <div class="tl-title">Verifikasi Admin</div>
+                <div class="tl-sub" style="color:#bbb">Belum diproses</div>
+              </div>
+            </div>
+            <div style="margin-top:12px;padding:8px;background:#fffce8;border-radius:6px;font-size:10px;color:#886a00;">
+              ℹ️ Status: <strong>Diajukan</strong><br>
+              Menunggu persetujuan Verifikator Tahap 2
+            </div>
+          </div>
+
+          <div style="height:10px"></div>
+          <!-- Quick info -->
+          <div class="timeline-box">
+            <h3>📄 Panduan Pengajuan</h3>
+            <div style="font-size:10px;color:#555;line-height:1.7;margin-top:6px">
+              <p>1. Klik <strong>Ajukan Peminjaman Baru</strong></p>
+              <p>2. Isi form: nama kegiatan, tanggal, jam, ruangan, organisasi &amp; ketua pelaksana</p>
+              <p>3. Tunggu proses approval berjenjang</p>
+              <p>4. Jika diterima: jadwal otomatis dibuat</p>
+              <p>5. Setelah selesai: unggah dokumentasi (foto penggunaan, kebersihan, pengembalian kunci)</p>
+              <p>6. Admin verifikasi → status <strong>Selesai</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Use Case Diagram - SPR JTI Polinema</title>
+<style>
+  body { margin: 0; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  svg { display: block; margin: 0 auto; }
+</style>
+</head>
+<body>
+<svg width="1200" height="820" viewBox="0 0 1200 820" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#555"/>
+    </marker>
+    <marker id="arr-open" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M1,1 L9,4 L1,7" fill="none" stroke="#555" stroke-width="1.2"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="550" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">Use Case Diagram</text>
+  <text x="550" y="52" text-anchor="middle" font-size="13" fill="#444">Sistem Peminjaman Ruangan JTI Polinema Berbasis Web</text>
+
+  <!-- System boundary -->
+  <rect x="200" y="70" width="820" height="720" rx="10" ry="10" fill="#f8f9ff" stroke="#3a5bd9" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="610" y="95" text-anchor="middle" font-size="13" font-style="italic" fill="#3a5bd9">Sistem Peminjaman Ruangan JTI Polinema</text>
+
+  <!-- ========== ACTORS ========== -->
+  <!-- Admin (left) -->
+  <g transform="translate(60,300)">
+    <ellipse cx="0" cy="-28" rx="14" ry="16" fill="none" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="0" y1="-12" x2="0" y2="22" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="-20" y1="2" x2="20" y2="2" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="0" y1="22" x2="-16" y2="46" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="0" y1="22" x2="16" y2="46" stroke="#1a1a2e" stroke-width="2"/>
+    <text x="0" y="62" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a1a2e">Admin</text>
+  </g>
+
+  <!-- Peminjam (left-mid) -->
+  <g transform="translate(60,530)">
+    <ellipse cx="0" cy="-28" rx="14" ry="16" fill="none" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="0" y1="-12" x2="0" y2="22" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="-20" y1="2" x2="20" y2="2" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="0" y1="22" x2="-16" y2="46" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="0" y1="22" x2="16" y2="46" stroke="#1a1a2e" stroke-width="2"/>
+    <text x="0" y="62" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a1a2e">Peminjam</text>
+    <text x="0" y="76" text-anchor="middle" font-size="10" fill="#666">(DSN/TDK/MHS)</text>
+  </g>
+
+  <!-- Verifikator (right) -->
+  <g transform="translate(1140,420)">
+    <ellipse cx="0" cy="-28" rx="14" ry="16" fill="none" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="0" y1="-12" x2="0" y2="22" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="-20" y1="2" x2="20" y2="2" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="0" y1="22" x2="-16" y2="46" stroke="#1a1a2e" stroke-width="2"/>
+    <line x1="0" y1="22" x2="16" y2="46" stroke="#1a1a2e" stroke-width="2"/>
+    <text x="0" y="62" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a1a2e">Verifikator</text>
+    <text x="0" y="76" text-anchor="middle" font-size="10" fill="#666">(DSN/MHS dgn jabatan)</text>
+  </g>
+
+  <!-- Sistem (right) -->
+  <g transform="translate(1140,580)">
+    <rect x="-26" y="-20" width="52" height="40" rx="4" fill="none" stroke="#1a1a2e" stroke-width="2"/>
+    <text x="0" y="5" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a1a2e">Sistem</text>
+    <text x="0" y="30" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a1a2e">Sistem</text>
+    <text x="0" y="44" text-anchor="middle" font-size="10" fill="#666">(Scheduler)</text>
+  </g>
+
+  <!-- ========== USE CASES - COLUMN 1 (Admin) ========== -->
+  <!-- UC1 Login -->
+  <ellipse cx="380" cy="140" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="380" y="144" text-anchor="middle" font-size="12" fill="#1a1a2e">Login / Autentikasi</text>
+
+  <!-- UC2 Kelola Pengguna -->
+  <ellipse cx="560" cy="140" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="560" y="144" text-anchor="middle" font-size="12" fill="#1a1a2e">Kelola Data Pengguna</text>
+
+  <!-- UC3 Kelola Ruangan -->
+  <ellipse cx="380" cy="210" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="380" y="214" text-anchor="middle" font-size="12" fill="#1a1a2e">Kelola Data Ruangan</text>
+
+  <!-- UC4 Kelola Prodi/Kelas -->
+  <ellipse cx="560" cy="210" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="560" y="214" text-anchor="middle" font-size="12" fill="#1a1a2e">Kelola Prodi &amp; Kelas</text>
+
+  <!-- UC5 Kelola Periode -->
+  <ellipse cx="740" cy="140" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="740" y="144" text-anchor="middle" font-size="12" fill="#1a1a2e">Kelola Periode</text>
+
+  <!-- UC6 Kelola Jadwal -->
+  <ellipse cx="740" cy="210" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="740" y="214" text-anchor="middle" font-size="12" fill="#1a1a2e">Kelola Jadwal Ruangan</text>
+
+  <!-- UC7 Upload Formulir -->
+  <ellipse cx="380" cy="290" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="380" y="294" text-anchor="middle" font-size="12" fill="#1a1a2e">Unggah Formulir</text>
+
+  <!-- UC8 Kelola Organisasi -->
+  <ellipse cx="560" cy="290" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="560" y="294" text-anchor="middle" font-size="12" fill="#1a1a2e">Kelola Organisasi</text>
+
+  <!-- UC9 Verifikasi Pengajuan (Admin) -->
+  <ellipse cx="740" cy="290" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="740" y="290" text-anchor="middle" font-size="11" fill="#1a1a2e">Verifikasi Pengajuan</text>
+  <text x="740" y="304" text-anchor="middle" font-size="11" fill="#1a1a2e">(Terima/Tolak)</text>
+
+  <!-- UC10 Selesaikan Peminjaman -->
+  <ellipse cx="380" cy="370" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="380" y="374" text-anchor="middle" font-size="12" fill="#1a1a2e">Verifikasi Penyelesaian</text>
+
+  <!-- UC11 Cetak Surat -->
+  <ellipse cx="560" cy="370" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="560" y="374" text-anchor="middle" font-size="12" fill="#1a1a2e">Cetak Surat Peminjaman</text>
+
+  <!-- UC12 Lihat Dasbor -->
+  <ellipse cx="740" cy="370" rx="110" ry="26" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="740" y="374" text-anchor="middle" font-size="12" fill="#1a1a2e">Lihat Dasbor Analitik</text>
+
+  <!-- ========== USE CASES - COLUMN 2 (Peminjam) ========== -->
+  <!-- UC13 Lihat Ruangan -->
+  <ellipse cx="380" cy="460" rx="110" ry="26" fill="#fff0e8" stroke="#e07b30" stroke-width="1.5"/>
+  <text x="380" y="464" text-anchor="middle" font-size="12" fill="#1a1a2e">Lihat Daftar Ruangan</text>
+
+  <!-- UC14 Lihat Jadwal -->
+  <ellipse cx="560" cy="460" rx="110" ry="26" fill="#fff0e8" stroke="#e07b30" stroke-width="1.5"/>
+  <text x="560" y="464" text-anchor="middle" font-size="12" fill="#1a1a2e">Lihat Daftar Jadwal</text>
+
+  <!-- UC15 Jadwal Pribadi -->
+  <ellipse cx="740" cy="460" rx="110" ry="26" fill="#fff0e8" stroke="#e07b30" stroke-width="1.5"/>
+  <text x="740" y="464" text-anchor="middle" font-size="12" fill="#1a1a2e">Lihat Jadwal Pribadi</text>
+
+  <!-- UC16 Ajukan Peminjaman -->
+  <ellipse cx="380" cy="540" rx="110" ry="26" fill="#fff0e8" stroke="#e07b30" stroke-width="1.5"/>
+  <text x="380" y="544" text-anchor="middle" font-size="12" fill="#1a1a2e">Ajukan Peminjaman</text>
+
+  <!-- UC17 Unggah Dok Selesai -->
+  <ellipse cx="560" cy="540" rx="110" ry="26" fill="#fff0e8" stroke="#e07b30" stroke-width="1.5"/>
+  <text x="560" y="536" text-anchor="middle" font-size="11" fill="#1a1a2e">Ajukan Penyelesaian</text>
+  <text x="560" y="550" text-anchor="middle" font-size="11" fill="#1a1a2e">(Unggah Dokumentasi)</text>
+
+  <!-- UC18 Lihat Riwayat Pengajuan -->
+  <ellipse cx="740" cy="540" rx="110" ry="26" fill="#fff0e8" stroke="#e07b30" stroke-width="1.5"/>
+  <text x="740" y="536" text-anchor="middle" font-size="11" fill="#1a1a2e">Lihat Riwayat</text>
+  <text x="740" y="550" text-anchor="middle" font-size="11" fill="#1a1a2e">Pengajuan</text>
+
+  <!-- UC19 Download Formulir -->
+  <ellipse cx="380" cy="620" rx="110" ry="26" fill="#fff0e8" stroke="#e07b30" stroke-width="1.5"/>
+  <text x="380" y="624" text-anchor="middle" font-size="12" fill="#1a1a2e">Unduh Formulir</text>
+
+  <!-- UC20 Kelola Profil -->
+  <ellipse cx="560" cy="620" rx="110" ry="26" fill="#d0f0e8" stroke="#27a060" stroke-width="1.5"/>
+  <text x="560" y="624" text-anchor="middle" font-size="12" fill="#1a1a2e">Kelola Profil</text>
+
+  <!-- UC21 Approval Berjenjang -->
+  <ellipse cx="940" cy="460" rx="110" ry="26" fill="#f0e8ff" stroke="#7b30e0" stroke-width="1.5"/>
+  <text x="940" y="456" text-anchor="middle" font-size="11" fill="#1a1a2e">Approval Berjenjang</text>
+  <text x="940" y="470" text-anchor="middle" font-size="11" fill="#1a1a2e">Pengajuan</text>
+
+  <!-- UC22 Auto status -->
+  <ellipse cx="940" cy="580" rx="110" ry="26" fill="#e8f8e8" stroke="#27a060" stroke-width="1.5"/>
+  <text x="940" y="576" text-anchor="middle" font-size="11" fill="#1a1a2e">Auto-Update Status</text>
+  <text x="940" y="590" text-anchor="middle" font-size="11" fill="#1a1a2e">Jadwal</text>
+
+  <!-- UC23 Lihat Antrian Approval -->
+  <ellipse cx="840" cy="540" rx="0" ry="0" fill="none"/>
+
+  <!-- ========== ACTOR CONNECTIONS ========== -->
+
+  <!-- Admin → UC1 Login -->
+  <line x1="80" y1="272" x2="270" y2="140" stroke="#555" stroke-width="1.2"/>
+  <!-- Admin → UC2 -->
+  <line x1="80" y1="272" x2="450" y2="140" stroke="#555" stroke-width="1.2"/>
+  <!-- Admin → UC3 -->
+  <line x1="80" y1="272" x2="270" y2="210" stroke="#555" stroke-width="1.2"/>
+  <!-- Admin → UC4 -->
+  <line x1="80" y1="272" x2="450" y2="210" stroke="#555" stroke-width="1.2"/>
+  <!-- Admin → UC5 -->
+  <line x1="80" y1="272" x2="630" y2="140" stroke="#555" stroke-width="1.2"/>
+  <!-- Admin → UC6 -->
+  <line x1="80" y1="272" x2="630" y2="210" stroke="#555" stroke-width="1.2"/>
+  <!-- Admin → UC7 -->
+  <line x1="80" y1="272" x2="270" y2="290" stroke="#555" stroke-width="1.2"/>
+  <!-- Admin → UC8 -->
+  <line x1="80" y1="272" x2="450" y2="290" stroke="#555" stroke-width="1.2"/>
+  <!-- Admin → UC9 -->
+  <line x1="80" y1="272" x2="630" y2="290" stroke="#555" stroke-width="1.2"/>
+  <!-- Admin → UC10 -->
+  <line x1="80" y1="272" x2="270" y2="370" stroke="#555" stroke-width="1.2"/>
+  <!-- Admin → UC11 -->
+  <line x1="80" y1="272" x2="450" y2="370" stroke="#555" stroke-width="1.2"/>
+  <!-- Admin → UC12 -->
+  <line x1="80" y1="272" x2="630" y2="370" stroke="#555" stroke-width="1.2"/>
+
+  <!-- Peminjam → UC1 Login -->
+  <line x1="80" y1="502" x2="270" y2="150" stroke="#e07b30" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <!-- Peminjam → UC13 -->
+  <line x1="80" y1="502" x2="270" y2="460" stroke="#e07b30" stroke-width="1.2"/>
+  <!-- Peminjam → UC14 -->
+  <line x1="80" y1="502" x2="450" y2="460" stroke="#e07b30" stroke-width="1.2"/>
+  <!-- Peminjam → UC15 -->
+  <line x1="80" y1="502" x2="630" y2="460" stroke="#e07b30" stroke-width="1.2"/>
+  <!-- Peminjam → UC16 -->
+  <line x1="80" y1="502" x2="270" y2="540" stroke="#e07b30" stroke-width="1.2"/>
+  <!-- Peminjam → UC17 -->
+  <line x1="80" y1="502" x2="450" y2="540" stroke="#e07b30" stroke-width="1.2"/>
+  <!-- Peminjam → UC18 -->
+  <line x1="80" y1="502" x2="630" y2="540" stroke="#e07b30" stroke-width="1.2"/>
+  <!-- Peminjam → UC19 -->
+  <line x1="80" y1="502" x2="270" y2="620" stroke="#e07b30" stroke-width="1.2"/>
+  <!-- Peminjam → UC20 -->
+  <line x1="80" y1="502" x2="450" y2="620" stroke="#e07b30" stroke-width="1.2"/>
+  <!-- Peminjam → UC11 cetak surat -->
+  <line x1="80" y1="502" x2="450" y2="374" stroke="#e07b30" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <!-- Peminjam → UC12 dasbor -->
+  <line x1="80" y1="502" x2="630" y2="374" stroke="#e07b30" stroke-width="1.2" stroke-dasharray="5,3"/>
+
+  <!-- Verifikator → UC21 -->
+  <line x1="1140" y1="392" x2="1050" y2="460" stroke="#7b30e0" stroke-width="1.2"/>
+  <!-- Verifikator → UC14 -->
+  <line x1="1140" y1="392" x2="670" y2="460" stroke="#7b30e0" stroke-width="1.2"/>
+  <!-- Verifikator → UC12 dasbor -->
+  <line x1="1140" y1="392" x2="850" y2="370" stroke="#7b30e0" stroke-width="1.2"/>
+
+  <!-- Sistem → UC22 -->
+  <line x1="1140" y1="560" x2="1050" y2="580" stroke="#27a060" stroke-width="1.5"/>
+
+  <!-- Legend -->
+  <rect x="210" y="740" width="780" height="48" rx="6" fill="#f5f5ff" stroke="#ccc" stroke-width="1"/>
+  <line x1="230" y1="760" x2="270" y2="760" stroke="#555" stroke-width="1.2"/>
+  <text x="280" y="764" font-size="11" fill="#333">Asosiasi (Actor–UC)</text>
+  <line x1="395" y1="760" x2="435" y2="760" stroke="#e07b30" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="445" y="764" font-size="11" fill="#333">Shared (beberapa aktor)</text>
+  <ellipse cx="630" cy="760" rx="32" ry="11" fill="#e8eeff" stroke="#3a5bd9" stroke-width="1.2"/>
+  <text x="630" y="764" text-anchor="middle" font-size="9" fill="#333">Admin UC</text>
+  <ellipse cx="720" cy="760" rx="32" ry="11" fill="#fff0e8" stroke="#e07b30" stroke-width="1.2"/>
+  <text x="720" y="764" text-anchor="middle" font-size="9" fill="#333">Peminjam</text>
+  <ellipse cx="820" cy="760" rx="35" ry="11" fill="#f0e8ff" stroke="#7b30e0" stroke-width="1.2"/>
+  <text x="820" y="764" text-anchor="middle" font-size="9" fill="#333">Verifikator</text>
+  <ellipse cx="910" cy="760" rx="32" ry="11" fill="#e8f8e8" stroke="#27a060" stroke-width="1.2"/>
+  <text x="910" y="764" text-anchor="middle" font-size="9" fill="#333">Sistem</text>
+</svg>
+</body>
+</html>

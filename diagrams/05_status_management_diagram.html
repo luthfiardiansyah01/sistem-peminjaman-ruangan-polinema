@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Manajemen Status - SPR JTI Polinema</title>
+<style>body { margin: 0; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }</style>
+</head>
+<body>
+<svg width="1200" height="780" viewBox="0 0 1200 780" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#444"/>
+    </marker>
+    <marker id="arrred" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#e04040"/>
+    </marker>
+    <marker id="arrgreen" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#1a7a1a"/>
+    </marker>
+    <marker id="arrblue" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#005f9e"/>
+    </marker>
+    <marker id="arrorange" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#d06000"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="540" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">Manajemen Status Sistem Peminjaman Ruangan JTI</text>
+  <text x="540" y="50" text-anchor="middle" font-size="12" fill="#444">State Machine – Status Pengajuan dan Jadwal (berdasarkan codebase)</text>
+
+  <!-- ========= SECTION: PENGAJUAN STATUS ========= -->
+  <rect x="20" y="65" width="1160" height="290" rx="10" fill="#fafbff" stroke="#3a5bd9" stroke-width="1.5" stroke-dasharray="8,4"/>
+  <text x="540" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#3a5bd9">Alur Status Pengajuan (t_pengajuan.pengajuan_status)</text>
+
+  <!-- START -->
+  <circle cx="70" cy="160" r="16" fill="#1a1a2e"/>
+
+  <!-- DIAJUKAN -->
+  <rect x="120" y="138" width="130" height="44" rx="22" fill="#e8f4ff" stroke="#3a5bd9" stroke-width="2"/>
+  <text x="185" y="164" text-anchor="middle" font-size="13" font-weight="bold" fill="#3a5bd9">DIAJUKAN</text>
+  <line x1="86" y1="160" x2="120" y2="160" stroke="#444" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="103" y="153" font-size="9" fill="#444">Peminjam submit</text>
+
+  <!-- approval box -->
+  <rect x="130" y="200" width="100" height="36" rx="8" fill="#f0e8ff" stroke="#7b30e0" stroke-width="1.2"/>
+  <text x="180" y="214" text-anchor="middle" font-size="10" fill="#7b30e0">Approval</text>
+  <text x="180" y="228" text-anchor="middle" font-size="10" fill="#7b30e0">Berjenjang</text>
+  <line x1="185" y1="182" x2="185" y2="200" stroke="#7b30e0" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#arr)"/>
+
+  <!-- DITERIMA -->
+  <rect x="420" y="118" width="130" height="44" rx="22" fill="#d0f5d0" stroke="#1a7a1a" stroke-width="2"/>
+  <text x="485" y="144" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a7a1a">DITERIMA</text>
+  <line x1="250" y1="148" x2="420" y2="132" stroke="#1a7a1a" stroke-width="2" marker-end="url(#arrgreen)"/>
+  <text x="328" y="127" font-size="9" fill="#1a7a1a">Semua Verifikator</text>
+  <text x="328" y="139" font-size="9" fill="#1a7a1a">setuju + Admin</text>
+
+  <!-- DITOLAK -->
+  <rect x="420" y="178" width="130" height="44" rx="22" fill="#ffe0e0" stroke="#e04040" stroke-width="2"/>
+  <text x="485" y="204" text-anchor="middle" font-size="13" font-weight="bold" fill="#e04040">DITOLAK</text>
+  <line x1="250" y1="168" x2="420" y2="196" stroke="#e04040" stroke-width="2" marker-end="url(#arrred)"/>
+  <text x="328" y="176" font-size="9" fill="#e04040">Verifikator/Admin</text>
+  <text x="328" y="188" font-size="9" fill="#e04040">menolak</text>
+
+  <!-- Dot: end for DITOLAK -->
+  <circle cx="610" cy="200" r="10" fill="none" stroke="#e04040" stroke-width="2.5"/>
+  <circle cx="610" cy="200" r="6" fill="#e04040"/>
+  <line x1="550" y1="200" x2="600" y2="200" stroke="#e04040" stroke-width="1.5" marker-end="url(#arrred)"/>
+
+  <!-- Notes for pengajuan -->
+  <rect x="640" y="105" width="520" height="228" rx="8" fill="#f5f5ff" stroke="#aaa" stroke-width="1"/>
+  <text x="650" y="123" font-size="11" font-weight="bold" fill="#333">Rincian Status Pengajuan:</text>
+  <text x="650" y="141" font-size="10" fill="#555">• diajukan   → Peminjam submit form pengajuan</text>
+  <text x="650" y="157" font-size="10" fill="#555">• [Approval] → Sistem membuat antrian t_pengajuan_approval</text>
+  <text x="650" y="173" font-size="10" fill="#555">               per urutan jabatan (urutan_approval)</text>
+  <text x="650" y="189" font-size="10" fill="#555">• diterima   → Seluruh tahap approval disetujui + Admin konfirmasi</text>
+  <text x="650" y="205" font-size="10" fill="#555">• ditolak    → Salah satu verifikator / Admin menolak</text>
+  <text x="650" y="221" font-size="10" fill="#555">• selesai    → Admin verifikasi dokumentasi penyelesaian</text>
+  <text x="650" y="237" font-size="10" fill="#555">• selesai → masuk daftar Riwayat Peminjaman</text>
+  <text x="650" y="253" font-size="10" fill="#555">Tiap transisi dicatat di t_pengajuan_approval</text>
+  <text x="650" y="269" font-size="10" fill="#888">(alasan_penolakan, diproses_pada, batas_waktu)</text>
+  <text x="650" y="285" font-size="10" fill="#888">Auto-reject: scheduler menolak approval melewati batas_waktu</text>
+  <text x="650" y="305" font-size="10" fill="#888">Nomor surat digenerate otomatis saat status → diterima</text>
+  <text x="650" y="323" font-size="10" fill="#888">Pengajuan dari m_organisasi → ketua_pelaksana ditetapkan saat submit</text>
+
+  <!-- ========= SECTION: JADWAL STATUS ========= -->
+  <rect x="20" y="370" width="1160" height="280" rx="10" fill="#fffaf5" stroke="#e07b30" stroke-width="1.5" stroke-dasharray="8,4"/>
+  <text x="600" y="390" text-anchor="middle" font-size="13" font-weight="bold" fill="#e07b30">Alur Status Jadwal (t_jadwal.jadwal_status)</text>
+
+  <!-- START -->
+  <circle cx="55" cy="470" r="14" fill="#1a1a2e"/>
+  <line x1="69" y1="470" x2="95" y2="470" stroke="#444" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="55" y="453" font-size="9" text-anchor="middle" fill="#444">Pengajuan</text>
+  <text x="55" y="443" font-size="9" text-anchor="middle" fill="#444">diterima</text>
+
+  <!-- AKAN DATANG -->
+  <rect x="95" y="448" width="150" height="44" rx="22" fill="#e8f4ff" stroke="#3a5bd9" stroke-width="2"/>
+  <text x="170" y="469" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5bd9">AKAN DATANG</text>
+  <text x="170" y="484" text-anchor="middle" font-size="9" fill="#3a5bd9">(Terjadwal)</text>
+
+  <!-- → BERLANGSUNG (gap 95px) -->
+  <line x1="245" y1="470" x2="340" y2="470" stroke="#005f9e" stroke-width="2" marker-end="url(#arrblue)"/>
+  <text x="292" y="442" text-anchor="middle" font-size="9" fill="#005f9e">Scheduler</text>
+  <text x="292" y="454" text-anchor="middle" font-size="9" fill="#005f9e">jam≤sekarang</text>
+
+  <!-- BERLANGSUNG -->
+  <rect x="340" y="448" width="155" height="44" rx="22" fill="#fff0d0" stroke="#d06000" stroke-width="2"/>
+  <text x="417" y="469" text-anchor="middle" font-size="12" font-weight="bold" fill="#d06000">BERLANGSUNG</text>
+  <text x="417" y="484" text-anchor="middle" font-size="9" fill="#d06000">(Sedang Digunakan)</text>
+
+  <!-- → DITINJAU (gap 95px) -->
+  <line x1="495" y1="470" x2="590" y2="470" stroke="#7b30e0" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="542" y="442" text-anchor="middle" font-size="9" fill="#7b30e0">Upload</text>
+  <text x="542" y="454" text-anchor="middle" font-size="9" fill="#7b30e0">dokumentasi</text>
+
+  <!-- DITINJAU -->
+  <rect x="590" y="448" width="140" height="44" rx="22" fill="#f0e8ff" stroke="#7b30e0" stroke-width="2"/>
+  <text x="660" y="469" text-anchor="middle" font-size="12" font-weight="bold" fill="#7b30e0">DITINJAU</text>
+  <text x="660" y="484" text-anchor="middle" font-size="9" fill="#7b30e0">(Dalam Peninjauan)</text>
+
+  <!-- → SELESAI (happy path, gap 90px) -->
+  <line x1="730" y1="458" x2="810" y2="437" stroke="#1a7a1a" stroke-width="2" marker-end="url(#arrgreen)"/>
+  <text x="762" y="432" text-anchor="middle" font-size="9" fill="#1a7a1a">Admin:</text>
+  <text x="762" y="444" text-anchor="middle" font-size="9" fill="#1a7a1a">Dok sesuai</text>
+
+  <!-- SELESAI -->
+  <rect x="810" y="413" width="135" height="44" rx="22" fill="#d0f5d0" stroke="#1a7a1a" stroke-width="2"/>
+  <text x="877" y="434" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a7a1a">SELESAI</text>
+  <text x="877" y="449" text-anchor="middle" font-size="9" fill="#1a7a1a">(Riwayat)</text>
+
+  <!-- END -->
+  <circle cx="1020" cy="435" r="10" fill="none" stroke="#1a7a1a" stroke-width="2.5"/>
+  <circle cx="1020" cy="435" r="6" fill="#1a7a1a"/>
+  <line x1="945" y1="435" x2="1010" y2="435" stroke="#1a7a1a" stroke-width="1.5" marker-end="url(#arrgreen)"/>
+
+  <!-- → DOK TIDAK SESUAI (loop) -->
+  <line x1="730" y1="483" x2="810" y2="512" stroke="#e04040" stroke-width="2" marker-end="url(#arrred)"/>
+  <text x="762" y="496" text-anchor="middle" font-size="9" fill="#e04040">Admin: Dok</text>
+  <text x="762" y="508" text-anchor="middle" font-size="9" fill="#e04040">tidak sesuai</text>
+
+  <!-- DOK TIDAK SESUAI -->
+  <rect x="810" y="497" width="155" height="44" rx="22" fill="#ffe0e0" stroke="#e04040" stroke-width="2"/>
+  <text x="887" y="518" text-anchor="middle" font-size="11" font-weight="bold" fill="#e04040">DOK TIDAK SESUAI</text>
+  <text x="887" y="533" text-anchor="middle" font-size="9" fill="#e04040">(Upload Ulang)</text>
+
+  <!-- Loop back to DITINJAU -->
+  <path d="M810,519 Q760,560 700,560 Q640,560 640,519" fill="none" stroke="#e04040" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrred)"/>
+  <text x="725" y="578" text-anchor="middle" font-size="9" fill="#e04040">Peminjam upload ulang</text>
+
+  <!-- Legend jadwal_status -->
+  <rect x="20" y="660" width="1160" height="108" rx="8" fill="#f8f8ff" stroke="#bbb" stroke-width="1"/>
+  <text x="600" y="678" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Keterangan Transisi Status Jadwal</text>
+  <!-- col 1 -->
+  <rect x="40" y="686" width="14" height="14" rx="3" fill="#e8f4ff" stroke="#3a5bd9"/>
+  <text x="60" y="698" font-size="10" fill="#333">akan_datang: Jadwal sudah disetujui, menunggu hari-H</text>
+  <rect x="40" y="704" width="14" height="14" rx="3" fill="#fff0d0" stroke="#d06000"/>
+  <text x="60" y="716" font-size="10" fill="#333">berlangsung: Scheduler otomatis set saat jam_mulai ≤ sekarang (Cron tiap menit)</text>
+  <rect x="40" y="722" width="14" height="14" rx="3" fill="#f0e8ff" stroke="#7b30e0"/>
+  <text x="60" y="734" font-size="10" fill="#333">ditinjau: Peminjam mengunggah dokumentasi (foto penggunaan, kebersihan, pengembalian kunci)</text>
+  <!-- col 2 -->
+  <rect x="590" y="686" width="14" height="14" rx="3" fill="#d0f5d0" stroke="#1a7a1a"/>
+  <text x="610" y="698" font-size="10" fill="#333">selesai: Admin verifikasi dokumentasi sesuai → data masuk riwayat</text>
+  <rect x="590" y="704" width="14" height="14" rx="3" fill="#ffe0e0" stroke="#e04040"/>
+  <text x="610" y="716" font-size="10" fill="#333">dok_tidak_sesuai: Admin menilai dokumentasi tidak memenuhi → peminjam upload ulang</text>
+  <text x="610" y="734" font-size="10" fill="#888">*Jadwal "selesai" merupakan data historis untuk monitoring &amp; evaluasi manajemen JTI</text>
+</svg>
+</body>
+</html>

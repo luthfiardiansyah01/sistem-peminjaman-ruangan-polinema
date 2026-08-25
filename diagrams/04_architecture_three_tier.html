@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Arsitektur Three-Tier - SPR JTI Polinema</title>
+<style>body { margin: 0; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }</style>
+</head>
+<body>
+<svg width="900" height="720" viewBox="0 0 900 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#555"/>
+    </marker>
+    <marker id="arrb" markerWidth="10" markerHeight="8" refX="1" refY="4" orient="auto">
+      <polygon points="10 0, 0 4, 10 8" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">Arsitektur Sistem Three-Tier</text>
+  <text x="450" y="52" text-anchor="middle" font-size="13" fill="#444">Sistem Peminjaman Ruangan JTI Polinema Berbasis Web (Laravel)</text>
+
+  <!-- ===================== TIER 1: PRESENTATION ===================== -->
+  <rect x="30" y="70" width="840" height="170" rx="12" fill="#e8f4ff" stroke="#3a5bd9" stroke-width="2.5"/>
+  <text x="450" y="92" text-anchor="middle" font-size="14" font-weight="bold" fill="#3a5bd9">Lapisan Presentasi (Presentation Tier)</text>
+  <text x="450" y="108" text-anchor="middle" font-size="11" fill="#555">Antarmuka pengguna yang berjalan di browser klien</text>
+
+  <!-- Client boxes -->
+  <!-- Admin Client -->
+  <rect x="55" y="120" width="140" height="90" rx="8" fill="#fff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="125" y="148" text-anchor="middle" font-size="24">🖥️</text>
+  <text x="125" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a1a2e">Admin</text>
+  <text x="125" y="186" text-anchor="middle" font-size="10" fill="#555">Browser</text>
+  <text x="125" y="198" text-anchor="middle" font-size="10" fill="#555">(CRUD, Verifikasi)</text>
+
+  <!-- Peminjam Client -->
+  <rect x="220" y="120" width="140" height="90" rx="8" fill="#fff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="290" y="148" text-anchor="middle" font-size="24">💻</text>
+  <text x="290" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a1a2e">Peminjam</text>
+  <text x="290" y="186" text-anchor="middle" font-size="10" fill="#555">(DSN/TDK/MHS)</text>
+  <text x="290" y="198" text-anchor="middle" font-size="10" fill="#555">Browser</text>
+
+  <!-- Verifikator -->
+  <rect x="385" y="120" width="140" height="90" rx="8" fill="#fff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="455" y="148" text-anchor="middle" font-size="24">📋</text>
+  <text x="455" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a1a2e">Verifikator</text>
+  <text x="455" y="186" text-anchor="middle" font-size="10" fill="#555">(DSN/MHS dgn jabatan)</text>
+  <text x="455" y="198" text-anchor="middle" font-size="10" fill="#555">Browser</text>
+
+  <!-- Publik -->
+  <rect x="550" y="120" width="140" height="90" rx="8" fill="#fff" stroke="#3a5bd9" stroke-width="1.5"/>
+  <text x="620" y="148" text-anchor="middle" font-size="24">🌐</text>
+  <text x="620" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a1a2e">Publik (Guest)</text>
+  <text x="620" y="186" text-anchor="middle" font-size="10" fill="#555">Dashboard Publik</text>
+  <text x="620" y="198" text-anchor="middle" font-size="10" fill="#555">Statistik Agregat</text>
+
+  <!-- Template Engine info -->
+  <rect x="720" y="120" width="120" height="90" rx="8" fill="#ddeeff" stroke="#3a5bd9" stroke-width="1"/>
+  <text x="780" y="148" text-anchor="middle" font-size="20">🎨</text>
+  <text x="780" y="166" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a1a2e">Blade</text>
+  <text x="780" y="182" text-anchor="middle" font-size="10" fill="#555">Template Engine</text>
+  <text x="780" y="198" text-anchor="middle" font-size="10" fill="#555">Bootstrap + AJAX</text>
+
+  <!-- Arrow Tier 1 → 2 -->
+  <line x1="450" y1="240" x2="450" y2="268" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="450" y1="268" x2="450" y2="240" stroke="#555" stroke-width="2" marker-end="url(#arrb)"/>
+  <text x="468" y="258" font-size="10" fill="#555">HTTP/HTTPS</text>
+  <text x="468" y="270" font-size="10" fill="#555">JSON/HTML</text>
+
+  <!-- ===================== TIER 2: APPLICATION ===================== -->
+  <rect x="30" y="280" width="840" height="230" rx="12" fill="#f0fff0" stroke="#1a7a1a" stroke-width="2.5"/>
+  <text x="450" y="302" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a7a1a">Lapisan Aplikasi / Logika Bisnis (Application Tier)</text>
+  <text x="450" y="318" text-anchor="middle" font-size="11" fill="#555">Server Laravel – Menjalankan logika bisnis, routing, autentikasi, dan orkestrasi layanan</text>
+
+  <!-- Laravel components -->
+  <!-- Router -->
+  <rect x="55" y="330" width="130" height="80" rx="8" fill="#fff" stroke="#1a7a1a" stroke-width="1.5"/>
+  <text x="120" y="358" text-anchor="middle" font-size="20">🔀</text>
+  <text x="120" y="376" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a1a2e">Router</text>
+  <text x="120" y="392" text-anchor="middle" font-size="10" fill="#555">web.php</text>
+  <text x="120" y="404" text-anchor="middle" font-size="10" fill="#555">Middleware</text>
+
+  <!-- Controllers -->
+  <rect x="205" y="330" width="140" height="80" rx="8" fill="#fff" stroke="#1a7a1a" stroke-width="1.5"/>
+  <text x="275" y="358" text-anchor="middle" font-size="20">⚙️</text>
+  <text x="275" y="376" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a1a2e">Controllers</text>
+  <text x="275" y="392" text-anchor="middle" font-size="10" fill="#555">Pengajuan, Jadwal</text>
+  <text x="275" y="404" text-anchor="middle" font-size="10" fill="#555">Ruangan, User, dll</text>
+
+  <!-- Services -->
+  <rect x="365" y="330" width="140" height="80" rx="8" fill="#fff" stroke="#1a7a1a" stroke-width="1.5"/>
+  <text x="435" y="358" text-anchor="middle" font-size="20">🔧</text>
+  <text x="435" y="376" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a1a2e">Services</text>
+  <text x="435" y="392" text-anchor="middle" font-size="10" fill="#555">PengajuanService</text>
+  <text x="435" y="404" text-anchor="middle" font-size="10" fill="#555">AuthService, dll</text>
+
+  <!-- Auth -->
+  <rect x="525" y="330" width="130" height="80" rx="8" fill="#fff" stroke="#1a7a1a" stroke-width="1.5"/>
+  <text x="590" y="358" text-anchor="middle" font-size="20">🔐</text>
+  <text x="590" y="376" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a1a2e">Auth &amp; RBAC</text>
+  <text x="590" y="392" text-anchor="middle" font-size="10" fill="#555">Middleware Auth</text>
+  <text x="590" y="404" text-anchor="middle" font-size="10" fill="#555">AuthorizeUser</text>
+
+  <!-- Scheduler -->
+  <rect x="675" y="330" width="130" height="80" rx="8" fill="#d0f0ff" stroke="#1a7a1a" stroke-width="1.5"/>
+  <text x="740" y="358" text-anchor="middle" font-size="20">⏰</text>
+  <text x="740" y="376" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a1a2e">Scheduler</text>
+  <text x="740" y="392" text-anchor="middle" font-size="10" fill="#555">AutoReject +</text>
+  <text x="740" y="404" text-anchor="middle" font-size="10" fill="#555">Auto-Status Update</text>
+
+  <!-- Models / Eloquent ORM -->
+  <rect x="55" y="430" width="750" height="60" rx="8" fill="#d8f8d8" stroke="#1a7a1a" stroke-width="1.5"/>
+  <text x="430" y="456" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a7a1a">Eloquent ORM – Model Layer</text>
+  <text x="430" y="472" text-anchor="middle" font-size="10" fill="#555">UserModel | RuanganModel | JadwalModel | PengajuanModel | PengajuanApprovalModel | OrganisasiModel | PeriodeModel | JabatanApprovalModel</text>
+
+  <!-- Arrow Tier 2 → 3 -->
+  <line x1="450" y1="510" x2="450" y2="538" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="450" y1="538" x2="450" y2="510" stroke="#555" stroke-width="2" marker-end="url(#arrb)"/>
+  <text x="468" y="528" font-size="10" fill="#555">Eloquent / PDO</text>
+  <text x="468" y="540" font-size="10" fill="#555">SQL Queries</text>
+
+  <!-- ===================== TIER 3: DATA ===================== -->
+  <rect x="30" y="550" width="840" height="150" rx="12" fill="#fff8e8" stroke="#c8a600" stroke-width="2.5"/>
+  <text x="450" y="572" text-anchor="middle" font-size="14" font-weight="bold" fill="#c8a600">Lapisan Data (Data Tier)</text>
+  <text x="450" y="588" text-anchor="middle" font-size="11" fill="#555">DBMS MySQL – Menyimpan dan mengelola seluruh data sistem</text>
+
+  <!-- DB tables grouped -->
+  <rect x="55" y="600" width="190" height="80" rx="8" fill="#fff" stroke="#c8a600" stroke-width="1.5"/>
+  <text x="150" y="622" text-anchor="middle" font-size="11" font-weight="bold" fill="#c8a600">Master Data</text>
+  <text x="150" y="638" text-anchor="middle" font-size="10" fill="#555">m_level, m_user, m_admin</text>
+  <text x="150" y="652" text-anchor="middle" font-size="10" fill="#555">m_dosen, m_tendik, m_mahasiswa</text>
+  <text x="150" y="666" text-anchor="middle" font-size="10" fill="#555">m_prodi, m_kelas, m_organisasi</text>
+
+  <rect x="265" y="600" width="175" height="80" rx="8" fill="#fff" stroke="#c8a600" stroke-width="1.5"/>
+  <text x="352" y="622" text-anchor="middle" font-size="11" font-weight="bold" fill="#c8a600">Data Ruangan &amp; Jadwal</text>
+  <text x="352" y="638" text-anchor="middle" font-size="10" fill="#555">m_ruangan</text>
+  <text x="352" y="652" text-anchor="middle" font-size="10" fill="#555">t_jadwal</text>
+  <text x="352" y="666" text-anchor="middle" font-size="10" fill="#555">t_jadwal_ruangan (pivot)</text>
+
+  <rect x="460" y="600" width="175" height="80" rx="8" fill="#fff" stroke="#c8a600" stroke-width="1.5"/>
+  <text x="547" y="622" text-anchor="middle" font-size="11" font-weight="bold" fill="#c8a600">Data Pengajuan</text>
+  <text x="547" y="638" text-anchor="middle" font-size="10" fill="#555">t_pengajuan</text>
+  <text x="547" y="652" text-anchor="middle" font-size="10" fill="#555">t_pengajuan_ruangan (pivot)</text>
+  <text x="547" y="666" text-anchor="middle" font-size="10" fill="#555">t_pengajuan_approval</text>
+
+  <rect x="655" y="600" width="190" height="80" rx="8" fill="#fff" stroke="#c8a600" stroke-width="1.5"/>
+  <text x="750" y="622" text-anchor="middle" font-size="11" font-weight="bold" fill="#c8a600">Pendukung</text>
+  <text x="750" y="638" text-anchor="middle" font-size="10" fill="#555">m_formulir, m_jabatan_approval</text>
+  <text x="750" y="652" text-anchor="middle" font-size="10" fill="#555">m_periode</text>
+  <text x="750" y="666" text-anchor="middle" font-size="10" fill="#555">personal_access_tokens</text>
+
+  <!-- Deployment note -->
+  <rect x="30" y="712" width="840" height="24" rx="6" fill="#e8f0ff" stroke="#3a5bd9" stroke-width="1"/>
+  <text x="450" y="728" text-anchor="middle" font-size="11" fill="#3a5bd9">🚀 Deployment: Google Cloud Platform | PHP 8.x + Laravel 10 | MySQL | Laragon (dev environment)</text>
+</svg>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>ERD - SPR JTI Polinema</title>
+<style>body { margin: 0; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }</style>
+</head>
+<body>
+<svg width="1200" height="980" viewBox="0 0 1200 980" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="600" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">Entity Relationship Diagram (ERD)</text>
+  <text x="600" y="50" text-anchor="middle" font-size="13" fill="#444">Sistem Peminjaman Ruangan JTI Polinema – Berdasarkan Codebase</text>
+
+  <!-- ===== ENTITY: m_level ===== -->
+  <g id="level">
+    <rect x="20" y="70" width="150" height="130" rx="6" fill="#e8f4ff" stroke="#3a5bd9" stroke-width="2"/>
+    <rect x="20" y="70" width="150" height="28" rx="6" fill="#3a5bd9"/>
+    <text x="95" y="89" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_level</text>
+    <text x="30" y="114" font-size="10" fill="#333">🔑 level_id (PK)</text>
+    <text x="30" y="130" font-size="10" fill="#333">level_kode</text>
+    <text x="30" y="146" font-size="10" fill="#333">level_nama</text>
+  </g>
+
+  <!-- ===== ENTITY: m_user ===== -->
+  <g id="user">
+    <rect x="220" y="70" width="160" height="148" rx="6" fill="#e8f4ff" stroke="#3a5bd9" stroke-width="2"/>
+    <rect x="220" y="70" width="160" height="28" rx="6" fill="#3a5bd9"/>
+    <text x="300" y="89" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_user</text>
+    <text x="230" y="114" font-size="10" fill="#333">🔑 user_id (PK)</text>
+    <text x="230" y="130" font-size="10" fill="#333">🔗 level_id (FK)</text>
+    <text x="230" y="146" font-size="10" fill="#333">username</text>
+    <text x="230" y="162" font-size="10" fill="#333">password</text>
+  </g>
+
+  <!-- m_level → m_user -->
+  <line x1="170" y1="130" x2="220" y2="130" stroke="#3a5bd9" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="193" y="124" font-size="9" fill="#3a5bd9">1</text>
+  <text x="205" y="124" font-size="9" fill="#3a5bd9">N</text>
+
+  <!-- ===== ENTITY: m_admin ===== -->
+  <g id="admin">
+    <rect x="20" y="240" width="160" height="148" rx="6" fill="#fff8e8" stroke="#c8a600" stroke-width="2"/>
+    <rect x="20" y="240" width="160" height="28" rx="6" fill="#c8a600"/>
+    <text x="100" y="259" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_admin</text>
+    <text x="30" y="284" font-size="10" fill="#333">🔑 admin_id (PK)</text>
+    <text x="30" y="300" font-size="10" fill="#333">🔗 user_id (FK)</text>
+    <text x="30" y="316" font-size="10" fill="#333">admin_nama</text>
+    <text x="30" y="332" font-size="10" fill="#333">admin_nip</text>
+    <text x="30" y="348" font-size="10" fill="#333">admin_foto</text>
+  </g>
+
+  <!-- m_user → m_admin -->
+  <line x1="300" y1="218" x2="100" y2="240" stroke="#3a5bd9" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ===== ENTITY: m_dosen ===== -->
+  <g id="dosen">
+    <rect x="220" y="240" width="160" height="162" rx="6" fill="#fff8e8" stroke="#c8a600" stroke-width="2"/>
+    <rect x="220" y="240" width="160" height="28" rx="6" fill="#c8a600"/>
+    <text x="300" y="259" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_dosen</text>
+    <text x="230" y="284" font-size="10" fill="#333">🔑 dosen_id (PK)</text>
+    <text x="230" y="300" font-size="10" fill="#333">🔗 user_id (FK)</text>
+    <text x="230" y="316" font-size="10" fill="#333">dosen_nama</text>
+    <text x="230" y="332" font-size="10" fill="#333">dosen_nip</text>
+    <text x="230" y="348" font-size="10" fill="#333">dosen_foto</text>
+    <text x="230" y="364" font-size="10" fill="#333">dosen_email</text>
+  </g>
+  <line x1="300" y1="218" x2="300" y2="240" stroke="#3a5bd9" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ===== ENTITY: m_tendik ===== -->
+  <g id="tendik">
+    <rect x="420" y="240" width="160" height="162" rx="6" fill="#fff8e8" stroke="#c8a600" stroke-width="2"/>
+    <rect x="420" y="240" width="160" height="28" rx="6" fill="#c8a600"/>
+    <text x="500" y="259" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_tendik</text>
+    <text x="430" y="284" font-size="10" fill="#333">🔑 tendik_id (PK)</text>
+    <text x="430" y="300" font-size="10" fill="#333">🔗 user_id (FK)</text>
+    <text x="430" y="316" font-size="10" fill="#333">tendik_nama</text>
+    <text x="430" y="332" font-size="10" fill="#333">tendik_nip</text>
+    <text x="430" y="348" font-size="10" fill="#333">tendik_foto</text>
+    <text x="430" y="364" font-size="10" fill="#333">tendik_email</text>
+  </g>
+  <line x1="380" y1="140" x2="500" y2="240" stroke="#3a5bd9" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ===== ENTITY: m_mahasiswa ===== -->
+  <g id="mhs">
+    <rect x="620" y="240" width="160" height="178" rx="6" fill="#fff8e8" stroke="#c8a600" stroke-width="2"/>
+    <rect x="620" y="240" width="160" height="28" rx="6" fill="#c8a600"/>
+    <text x="700" y="259" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_mahasiswa</text>
+    <text x="630" y="284" font-size="10" fill="#333">🔑 mahasiswa_id (PK)</text>
+    <text x="630" y="300" font-size="10" fill="#333">🔗 user_id (FK)</text>
+    <text x="630" y="316" font-size="10" fill="#333">🔗 kelas_id (FK)</text>
+    <text x="630" y="332" font-size="10" fill="#333">mahasiswa_nama</text>
+    <text x="630" y="348" font-size="10" fill="#333">mahasiswa_nim</text>
+    <text x="630" y="364" font-size="10" fill="#333">mahasiswa_foto</text>
+    <text x="630" y="380" font-size="10" fill="#333">mahasiswa_email</text>
+  </g>
+  <line x1="380" y1="144" x2="700" y2="240" stroke="#3a5bd9" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ===== ENTITY: m_prodi ===== -->
+  <g id="prodi">
+    <rect x="820" y="70" width="160" height="130" rx="6" fill="#f0fff0" stroke="#1a7a1a" stroke-width="2"/>
+    <rect x="820" y="70" width="160" height="28" rx="6" fill="#1a7a1a"/>
+    <text x="900" y="89" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_prodi</text>
+    <text x="830" y="114" font-size="10" fill="#333">🔑 prodi_id (PK)</text>
+    <text x="830" y="130" font-size="10" fill="#333">prodi_kode</text>
+    <text x="830" y="146" font-size="10" fill="#333">prodi_nama</text>
+  </g>
+
+  <!-- ===== ENTITY: m_kelas ===== -->
+  <g id="kelas">
+    <rect x="820" y="240" width="160" height="130" rx="6" fill="#f0fff0" stroke="#1a7a1a" stroke-width="2"/>
+    <rect x="820" y="240" width="160" height="28" rx="6" fill="#1a7a1a"/>
+    <text x="900" y="259" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_kelas</text>
+    <text x="830" y="284" font-size="10" fill="#333">🔑 kelas_id (PK)</text>
+    <text x="830" y="300" font-size="10" fill="#333">🔗 prodi_id (FK)</text>
+    <text x="830" y="316" font-size="10" fill="#333">kelas_nama</text>
+  </g>
+  <!-- prodi → kelas -->
+  <line x1="900" y1="200" x2="900" y2="240" stroke="#1a7a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <!-- kelas → mahasiswa -->
+  <line x1="820" y1="310" x2="780" y2="310" stroke="#1a7a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ===== ENTITY: m_ruangan ===== -->
+  <g id="ruangan">
+    <rect x="440" y="70" width="175" height="178" rx="6" fill="#f8f0ff" stroke="#7b30e0" stroke-width="2"/>
+    <rect x="440" y="70" width="175" height="28" rx="6" fill="#7b30e0"/>
+    <text x="527" y="89" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_ruangan</text>
+    <text x="450" y="114" font-size="10" fill="#333">🔑 ruangan_id (PK)</text>
+    <text x="450" y="130" font-size="10" fill="#333">ruangan_kode</text>
+    <text x="450" y="146" font-size="10" fill="#333">ruangan_nama</text>
+    <text x="450" y="162" font-size="10" fill="#333">ruangan_fasilitas</text>
+    <text x="450" y="178" font-size="10" fill="#333">ruangan_kuota</text>
+    <text x="450" y="194" font-size="10" fill="#333">ruangan_status</text>
+    <text x="450" y="210" font-size="10" fill="#333">ruangan_kategori</text>
+    <text x="450" y="226" font-size="10" fill="#333">ruangan_foto</text>
+  </g>
+
+  <!-- ===== ENTITY: m_organisasi ===== -->
+  <g id="org">
+    <rect x="1010" y="70" width="170" height="130" rx="6" fill="#fff0f8" stroke="#8a005f" stroke-width="2"/>
+    <rect x="1010" y="70" width="170" height="28" rx="6" fill="#8a005f"/>
+    <text x="1095" y="89" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_organisasi</text>
+    <text x="1020" y="114" font-size="10" fill="#333">🔑 organisasi_id (PK)</text>
+    <text x="1020" y="130" font-size="10" fill="#333">organisasi_kode</text>
+    <text x="1020" y="146" font-size="10" fill="#333">organisasi_nama</text>
+    <text x="1020" y="162" font-size="10" fill="#333">organisasi_logo</text>
+  </g>
+
+  <!-- ===== ENTITY: m_jabatan_approval ===== -->
+  <g id="jabatan">
+    <rect x="1010" y="240" width="170" height="162" rx="6" fill="#fff0f8" stroke="#8a005f" stroke-width="2"/>
+    <rect x="1010" y="240" width="170" height="28" rx="6" fill="#8a005f"/>
+    <text x="1095" y="259" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_jabatan_approval</text>
+    <text x="1020" y="284" font-size="10" fill="#333">🔑 jabatan_id (PK)</text>
+    <text x="1020" y="300" font-size="10" fill="#333">🔗 user_id (FK)</text>
+    <text x="1020" y="316" font-size="10" fill="#333">🔗 organisasi_id (FK)</text>
+    <text x="1020" y="332" font-size="10" fill="#333">posisi_approval</text>
+    <text x="1020" y="348" font-size="10" fill="#333">urutan_approval</text>
+  </g>
+  <!-- org → jabatan -->
+  <line x1="1095" y1="200" x2="1095" y2="240" stroke="#8a005f" stroke-width="1.5" marker-end="url(#arr)"/>
+  <!-- user → jabatan -->
+  <line x1="380" y1="130" x2="1010" y2="290" stroke="#3a5bd9" stroke-width="1.2" stroke-dasharray="6,3" marker-end="url(#arr)"/>
+
+  <!-- ===== ENTITY: m_periode ===== -->
+  <g id="periode">
+    <rect x="820" y="430" width="160" height="162" rx="6" fill="#e8fff8" stroke="#007a5a" stroke-width="2"/>
+    <rect x="820" y="430" width="160" height="28" rx="6" fill="#007a5a"/>
+    <text x="900" y="449" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_periode</text>
+    <text x="830" y="474" font-size="10" fill="#333">🔑 periode_id (PK)</text>
+    <text x="830" y="490" font-size="10" fill="#333">🔗 updated_by (FK→user)</text>
+    <text x="830" y="506" font-size="10" fill="#333">tahun_ajaran</text>
+    <text x="830" y="522" font-size="10" fill="#333">semester</text>
+    <text x="830" y="538" font-size="10" fill="#333">tanggal_mulai</text>
+    <text x="830" y="554" font-size="10" fill="#333">tanggal_selesai</text>
+    <text x="830" y="570" font-size="10" fill="#333">periode_status</text>
+  </g>
+
+  <!-- ===== ENTITY: m_formulir ===== -->
+  <g id="formulir">
+    <rect x="20" y="430" width="160" height="130" rx="6" fill="#fff8e8" stroke="#c8a600" stroke-width="2"/>
+    <rect x="20" y="430" width="160" height="28" rx="6" fill="#c8a600"/>
+    <text x="100" y="449" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">m_formulir</text>
+    <text x="30" y="474" font-size="10" fill="#333">🔑 formulir_id (PK)</text>
+    <text x="30" y="490" font-size="10" fill="#333">formulir_nama</text>
+    <text x="30" y="506" font-size="10" fill="#333">formulir_file</text>
+    <text x="30" y="522" font-size="10" fill="#333">formulir_tgl_upload</text>
+  </g>
+
+  <!-- ===== ENTITY: t_jadwal ===== -->
+  <g id="jadwal">
+    <rect x="220" y="450" width="175" height="210" rx="6" fill="#ffe8f0" stroke="#e04080" stroke-width="2"/>
+    <rect x="220" y="450" width="175" height="28" rx="6" fill="#e04080"/>
+    <text x="307" y="469" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">t_jadwal</text>
+    <text x="230" y="494" font-size="10" fill="#333">🔑 jadwal_id (PK)</text>
+    <text x="230" y="510" font-size="10" fill="#333">🔗 user_id (FK)</text>
+    <text x="230" y="526" font-size="10" fill="#333">jadwal_nama</text>
+    <text x="230" y="542" font-size="10" fill="#333">jadwal_tgl</text>
+    <text x="230" y="558" font-size="10" fill="#333">jadwal_jam_mulai</text>
+    <text x="230" y="574" font-size="10" fill="#333">jadwal_jam_selesai</text>
+    <text x="230" y="590" font-size="10" fill="#333">jadwal_jumPes</text>
+    <text x="230" y="606" font-size="10" fill="#333">jadwal_status</text>
+    <text x="230" y="622" font-size="10" fill="#777">(akan_datang|berlangsung</text>
+    <text x="230" y="636" font-size="10" fill="#777"> |selesai|ditinjau|...)</text>
+  </g>
+  <!-- user → jadwal -->
+  <line x1="300" y1="218" x2="307" y2="450" stroke="#3a5bd9" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ===== ENTITY: t_jadwal_ruangan (pivot) ===== -->
+  <g id="jadwal_ruangan">
+    <rect x="440" y="480" width="160" height="100" rx="6" fill="#ede8ff" stroke="#7b30e0" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <rect x="440" y="480" width="160" height="28" rx="6" fill="#ccc0f0"/>
+    <text x="520" y="499" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">t_jadwal_ruangan</text>
+    <text x="450" y="524" font-size="10" fill="#333">🔗 jadwal_id (FK)</text>
+    <text x="450" y="540" font-size="10" fill="#333">🔗 ruangan_id (FK)</text>
+    <text x="450" y="556" font-size="10" fill="#666">(pivot M:N)</text>
+  </g>
+  <!-- jadwal ↔ pivot -->
+  <line x1="395" y1="530" x2="440" y2="530" stroke="#e04080" stroke-width="1.5"/>
+  <text x="415" y="524" font-size="9" fill="#e04080">N</text>
+  <!-- ruangan ↔ pivot -->
+  <line x1="527" y1="248" x2="520" y2="480" stroke="#7b30e0" stroke-width="1.5"/>
+  <text x="524" y="470" font-size="9" fill="#7b30e0">N</text>
+
+  <!-- ===== ENTITY: t_pengajuan ===== -->
+  <g id="pengajuan">
+    <rect x="220" y="700" width="175" height="250" rx="6" fill="#ffe8f0" stroke="#e04080" stroke-width="2"/>
+    <rect x="220" y="700" width="175" height="28" rx="6" fill="#c0105a"/>
+    <text x="307" y="719" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">t_pengajuan</text>
+    <text x="230" y="744" font-size="10" fill="#333">🔑 pengajuan_id (PK)</text>
+    <text x="230" y="760" font-size="10" fill="#333">🔗 user_id (FK)</text>
+    <text x="230" y="776" font-size="10" fill="#333">🔗 organisasi_id (FK)</text>
+    <text x="230" y="792" font-size="10" fill="#333">🔗 formulir_id (FK)</text>
+    <text x="230" y="808" font-size="10" fill="#333">🔗 ketua_pelaksana_user_id</text>
+    <text x="230" y="824" font-size="10" fill="#333">pengajuan_nama</text>
+    <text x="230" y="840" font-size="10" fill="#333">pengajuan_tgl</text>
+    <text x="230" y="856" font-size="10" fill="#333">pengajuan_status</text>
+    <text x="230" y="872" font-size="10" fill="#777">(diajukan|diterima|ditolak</text>
+    <text x="230" y="886" font-size="10" fill="#777"> |selesai|...)</text>
+    <text x="230" y="902" font-size="10" fill="#333">nomor_surat</text>
+    <text x="230" y="918" font-size="10" fill="#333">catatan_verifikator</text>
+  </g>
+  <!-- user → pengajuan -->
+  <line x1="300" y1="218" x2="307" y2="700" stroke="#3a5bd9" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <!-- formulir → pengajuan -->
+  <line x1="180" y1="496" x2="220" y2="790" stroke="#c8a600" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <!-- org → pengajuan -->
+  <line x1="1010" y1="134" x2="394" y2="775" stroke="#8a005f" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+
+  <!-- ===== ENTITY: t_pengajuan_ruangan (pivot) ===== -->
+  <g id="peng_ruangan">
+    <rect x="440" y="720" width="160" height="100" rx="6" fill="#ede8ff" stroke="#7b30e0" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <rect x="440" y="720" width="160" height="28" rx="6" fill="#ccc0f0"/>
+    <text x="520" y="739" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">t_pengajuan_ruangan</text>
+    <text x="450" y="764" font-size="10" fill="#333">🔗 pengajuan_id (FK)</text>
+    <text x="450" y="780" font-size="10" fill="#333">🔗 ruangan_id (FK)</text>
+    <text x="450" y="796" font-size="10" fill="#666">(pivot M:N)</text>
+  </g>
+  <line x1="395" y1="770" x2="440" y2="770" stroke="#c0105a" stroke-width="1.5"/>
+  <line x1="520" y1="248" x2="520" y2="720" stroke="#7b30e0" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- ===== ENTITY: t_pengajuan_approval ===== -->
+  <g id="approval">
+    <rect x="640" y="700" width="175" height="210" rx="6" fill="#f0e8ff" stroke="#7b30e0" stroke-width="2"/>
+    <rect x="640" y="700" width="175" height="28" rx="6" fill="#7b30e0"/>
+    <text x="727" y="719" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">t_pengajuan_approval</text>
+    <text x="650" y="744" font-size="10" fill="#333">🔑 approval_id (PK)</text>
+    <text x="650" y="760" font-size="10" fill="#333">🔗 pengajuan_id (FK)</text>
+    <text x="650" y="776" font-size="10" fill="#333">🔗 jabatan_id (FK)</text>
+    <text x="650" y="792" font-size="10" fill="#333">urutan_tahap</text>
+    <text x="650" y="808" font-size="10" fill="#333">status_approval</text>
+    <text x="650" y="824" font-size="10" fill="#777">(menunggu|disetujui|ditolak)</text>
+    <text x="650" y="840" font-size="10" fill="#333">alasan_penolakan</text>
+    <text x="650" y="856" font-size="10" fill="#333">batas_waktu</text>
+    <text x="650" y="872" font-size="10" fill="#333">diproses_pada</text>
+  </g>
+  <!-- pengajuan → approval -->
+  <line x1="395" y1="800" x2="640" y2="760" stroke="#7b30e0" stroke-width="1.5" marker-end="url(#arr)"/>
+  <!-- jabatan → approval -->
+  <line x1="1095" y1="402" x2="815" y2="780" stroke="#8a005f" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+
+  <!-- Legend -->
+  <rect x="10" y="945" width="1180" height="32" rx="6" fill="#f5f5ff" stroke="#ccc" stroke-width="1"/>
+  <text x="600" y="957" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Keterangan:</text>
+  <text x="600" y="970" text-anchor="middle" font-size="10" fill="#555">🔑 Primary Key  |  🔗 Foreign Key  |  Garis solid = relasi langsung FK  |  Garis putus-putus = relasi via pivot/indirect  |  Kotak putus-putus = tabel pivot (M:N)</text>
+</svg>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>@yield('title', 'Sistem Peminjaman Ruangan')</title>
+
+  <meta name="csrf-token" content="{{csrf_token()}}"> <!--Script untuk mengirimkan token csrf setiap kali request ajax-->
+
+  <style>
+        /* CSS Kustom Anda */
+        #page-title {
+            font-weight: 700;
+            font-size: 36px;
+            line-height: 120%;
+            letter-spacing: -0.02em;
+
+            color: #023047;
+            z-index: 1000; 
+        }
+
+        #custom-sidebar {
+          background-color: #023047 !important;
+        }
+
+        .brand-link .brand-text {
+            color: #FFFFFF !important; 
+        }
+
+        .sidebar .form-inline {
+          border-top: 1px solid #01496E !important; 
+          padding-top: 1rem !important; 
+          margin-bottom: 1rem !important; 
+        }
+
+        .sidebar .form-inline .form-control-sidebar {
+            background-color: #01496E !important; 
+            color: #FFFFFF; 
+            border-color: #01496E !important; 
+        }
+
+        .sidebar .form-inline .btn-sidebar {
+            background-color: #01496E !important; 
+            border-color: #01496E !important;
+          }
+
+        .sidebar .form-inline .btn-sidebar i {
+            color: #B3B3B3 !important; 
+        }
+
+        .nav-sidebar .nav-link.active {
+          background-color: #219EBC !important; 
+          color: #FFFFFF !important; 
+        }
+
+        .nav-sidebar .nav-item:not(.menu-open) > .nav-link:not(.active):hover {
+          background-color: #0477B1; 
+          opacity: 0.8; 
+        }
+
+        .nav-sidebar .nav-link {
+          transition: background-color 0.3s ease;
+        }
+
+        .nav-sidebar .nav-link:not(.active),
+        .nav-sidebar .nav-link:not(.active) p,
+        .nav-sidebar .nav-link:not(.active) i {
+          color: #FFFFFF !important; 
+        }
+    </style>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css')}}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  @stack('css')
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  @include('layouts.header')
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar elevation-4" id="custom-sidebar">
+    <!-- Brand Logo -->
+    <a href="{{ url('/') }}" class="brand-link d-flex align-items-center">
+      <img src="{{ url('images\Logo JTI Polinema with White BG.png') }}" alt="Logo JTI Polinema" class="brand-image img-circle elevation-3" style="opacity: .8">
+    
+      <span class="brand-text font-weight-bold" style="line-height: 1.1; display: block;">Sistem Peminjaman<br>Ruangan</span>
+    </a>
+
+    <!-- Sidebar -->
+    @include('layouts.sidebar')
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      @include('layouts.breadcrumb')
+      
+      <!-- Main content -->
+      <section class="content">
+        @yield('content')
+        
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+  @include('layouts.footer')
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ asset('adminlte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- overlayScrollbars -->
+<script src="{{ asset('adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+<!-- ChartJS -->
+<script src="{{ asset('adminlte/plugins/chart.js/Chart.min.js') }}"></script>
+<!-- jQuery Validation -->
+<script src="{{ asset('adminlte/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('adminlte/dist/js/adminlte.js?v=3.2.0') }}"></script>
+<!-- Select2 -->
+<script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+
+<!-- Script Global Modal AJAX & Select2 Auto-Init -->
+<script>
+    // Setup otomatis CSRF Token untuk seluruh request AJAX jQuery
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // Fungsi Global untuk Membuka Modal AJAX
+    function modalAction(url = '') {
+        $('#myModal').load(url, function(response, status, xhr) {
+            if (status === "error") {
+                alert("Gagal memuat modal: " + xhr.status + " " + xhr.statusText);
+                return;
+            }
+
+            // Tampilkan Modal
+            $('#myModal').modal('show');
+
+            // Otomatis mengaktifkan Select2 pada elemen select yang berkelas .select2 di dalam modal
+            $('#myModal .select2').select2({
+                theme: 'bootstrap4',
+                dropdownParent: $('#myModal') // Memastikan dropdown muncul sempurna di atas modal
+            });
+        });
+    }
+</script>
+
+@stack('js')
+</body>
+</html>
