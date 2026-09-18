@@ -6,8 +6,11 @@
     <style>
         body { font-family: 'Times New Roman', serif; font-size: 12px; color: #000; }
         .header { border-bottom: 3px double #000; padding-bottom: 10px; margin-bottom: 20px; overflow: hidden; }
-        .header img.logo { height: 60px; float: left; }
-        .header h2, .header h4 { margin: 0; text-align: center; }
+        .header img.logo { height: 70px; float: left; }
+        .header .kop-text { margin-left: 85px; text-align: center; }
+        .header .kop-text p { margin: 0; }
+        .header .kop-instansi { font-weight: bold; font-size: 14px; }
+        .header .kop-alamat { font-size: 11px; }
         table.kop { width: 100%; margin-top: 15px; }
         table.kop td { padding: 1px 0; vertical-align: top; }
         table.kop td.label { width: 70px; }
@@ -33,8 +36,15 @@
         @if($pengajuan->organisasi && $pengajuan->organisasi->organisasi_logo)
             <img class="logo" src="{{ public_path('storage/' . $pengajuan->organisasi->organisasi_logo) }}" alt="Logo">
         @endif
-        <h2>SURAT PEMINJAMAN RUANGAN</h2>
-        <h4>Jurusan Teknologi Informasi</h4>
+        {{-- Kop surat resmi mengikuti template klien FRM.BAA.03.18.00 --}}
+        <div class="kop-text">
+            <p class="kop-instansi">KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI</p>
+            <p class="kop-instansi">POLITEKNIK NEGERI MALANG</p>
+            <p class="kop-instansi">JURUSAN TEKNOLOGI INFORMASI</p>
+            <p class="kop-alamat">Jalan Soekarno Hatta Nomor 9 Jatimulyo, Lowokwaru, Malang 65141</p>
+            <p class="kop-alamat">Telepon (0341) 404424, 404425, Faksimile (0341) 404420</p>
+            <p class="kop-alamat">Laman www.polinema.ac.id</p>
+        </div>
     </div>
 
     @php
@@ -75,12 +85,28 @@
         };
 
         // Ikuti pembagian dua blok tanda tangan seperti pada contoh surat resmi
-        // (FRM.BAA.03.18.00): blok "Hormat kami," untuk pihak pemohon (Ketua Pelaksana
-        // & Ketua Umum/Organisasi), blok "Mengetahui dan menyetujui," untuk seluruh
-        // pihak yang menyetujui berjenjang sesudahnya (DPK, Presiden BEM, Ketua Jurusan).
-        $isPemohon = fn ($a) => in_array(optional($a->jabatanApproval)->posisi_approval, ['Ketua Pelaksana', 'Ketua Umum'], true);
-        $blokPemohon = $approvalUrut->filter($isPemohon)->values();
-        $blokPenyetuju = $approvalUrut->reject($isPemohon)->values();
+        // (FRM.BAA.03.18.00): blok "Hormat kami," untuk pihak pemohon (Ketua Umum di kiri,
+        // Ketua Pelaksana di kanan), blok "Mengetahui dan menyetujui," untuk pihak yang
+        // menyetujui berjenjang sesudahnya (DPK di kiri, Presiden BEM di kanan pada baris
+        // pertama, lalu Ketua Jurusan sendirian di baris berikutnya). Urutan tampilan di
+        // sini mengikuti tata letak resmi template klien, TERPISAH dari urutan_tahap yang
+        // dipakai untuk proses approval berjenjang (lihat PengajuanService).
+        $urutanTampilPemohon = ['Ketua Umum', 'Ketua Pelaksana'];
+        $urutanTampilPenyetuju = ['DPK', 'Presiden BEM', 'Ketua Jurusan'];
+        $posisiTampil = fn ($a) => optional($a->jabatanApproval)->posisi_approval;
+        $isPemohon = fn ($a) => in_array($posisiTampil($a), $urutanTampilPemohon, true);
+
+        $urutanIndex = function ($posisi, array $urutan) {
+            $index = array_search($posisi, $urutan, true);
+            return $index === false ? PHP_INT_MAX : $index;
+        };
+
+        $blokPemohon = $approvalUrut->filter($isPemohon)
+            ->sortBy(fn ($a) => $urutanIndex($posisiTampil($a), $urutanTampilPemohon))
+            ->values();
+        $blokPenyetuju = $approvalUrut->reject($isPemohon)
+            ->sortBy(fn ($a) => $urutanIndex($posisiTampil($a), $urutanTampilPenyetuju))
+            ->values();
     @endphp
 
     <table class="kop">

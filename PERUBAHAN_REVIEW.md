@@ -117,6 +117,52 @@ NIP atau NIDN sungguhan, jadi ini murni soal label sesuai instruksi klien per-po
 
 Verifikasi: `php -l` lolos, `php artisan view:cache` sukses.
 
+### Implementasi poin 5 — selesai
+
+Klien mengirimkan template resmi `FRM.BAA.03.18.00 Surat Peminjaman Gedung beserta Izin Dekorasi
+(Fasilitas Umum).docx`. Isinya diekstrak & dibandingkan dengan
+[`resources/views/pdf/surat_peminjaman.blade.php`](resources/views/pdf/surat_peminjaman.blade.php)
+saat ini. Perbedaan yang ditemukan & disesuaikan:
+
+1. **Kop surat** — sebelumnya hanya judul "SURAT PEMINJAMAN RUANGAN" + "Jurusan Teknologi
+   Informasi". Diganti jadi kop resmi lengkap sesuai `header1.xml` template klien:
+   "KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI" / "POLITEKNIK NEGERI MALANG" /
+   "JURUSAN TEKNOLOGI INFORMASI" + alamat, telepon/faks, dan laman — teks institusi generik,
+   di-hardcode (bukan dari data ruangan/organisasi).
+2. **Urutan blok tanda tangan** — template menempatkan **Ketua Umum di kiri, Ketua Pelaksana
+   di kanan** pada blok "Hormat kami,", dan **DPK di kiri, Presiden BEM di kanan** (baru
+   Ketua Jurusan di baris berikutnya) pada blok "Mengetahui dan menyetujui,". Urutan tampil ini
+   sebelumnya ikut `urutan_tahap` approval (proses bisnis), sehingga kebalik dari template.
+   Sekarang urutan **tampilan** blok tanda tangan dipisah dari urutan **proses** approval —
+   `urutan_tahap` tetap dipakai apa adanya untuk `generateApprovalStages()`/`processApproval()`,
+   hanya render-nya di-sort ulang mengikuti tata letak resmi template.
+
+**Yang SENGAJA tidak diikuti dari template** (di luar cakupan / bertentangan dengan poin 1):
+
+- Template menunjukkan approver tambahan **"Wakil Direktur III"** sejajar dengan Ketua Jurusan
+  untuk peminjaman gedung fasilitas umum. Ini **tidak ditambahkan** — poin 1 revisi ini secara
+  eksplisit meminta alur approval berjenjang kompleks (termasuk eskalasi Wadir) tidak dulu
+  diimplementasikan. Kalau nanti dibutuhkan, ini perlu dikonfirmasi ulang ke klien dulu
+  (termasuk klarifikasi: `Yth.` di template menyebut "Wakil Direktur II" tapi blok tanda
+  tangannya menyebut "Wakil Direktur III" — kemungkinan salah ketik di template asli klien,
+  perlu ditanyakan).
+- "Hal" pada kop template tertulis "Peminjaman Gedung dan Izin Dekorasi" — dipertahankan
+  sebagai "Peminjaman Ruangan {daftar ruangan}" sesuai istilah yang dipakai sistem ini
+  (ruangan, bukan gedung fasilitas umum), karena template klien ini aslinya untuk form
+  peminjaman gedung fasilitas umum (bukan ruangan JTI) — dua jenis surat yang mirip tapi
+  tidak identik.
+- Footer nomor form "FRM.BAA.03.18.00" tidak ditambahkan — itu nomor form khusus untuk form
+  peminjaman gedung fasilitas umum tersebut, bukan form ruangan JTI ini.
+
+**Verifikasi visual — selesai.** Dibuat 1 pengajuan uji sementara (Diterima, approval lengkap
+Ketua Pelaksana/Ketua Umum/Presiden BEM/DPK/Ketua Jurusan) lalu di-render lewat
+`Pdf::loadView('pdf.surat_peminjaman', ...)` yang sama persis dengan yang dipakai
+`PengajuanController::cetak_surat_ajax()`. Hasilnya sesuai ekspektasi: kop resmi lengkap
+tampil, urutan tanda tangan Ketua Umum(kiri)/Ketua Pelaksana(kanan) dan DPK(kiri)/Presiden
+BEM(kanan) lalu Ketua Jurusan sendirian di baris berikutnya, serta label `NIP.` untuk DPK &
+Ketua Jurusan (poin 2) semua tampil benar. Data uji & file PDF sementara sudah dihapus lagi
+setelah verifikasi (`PengajuanApprovalModel`/`PengajuanModel` id 2 di-delete).
+
 > Catatan: direktori ini baru saja di-`git init` dengan satu commit awal ("first commit") yang
 > sudah memuat seluruh perubahan sesi ini — jadi `git diff`/`git log` tidak bisa dipakai untuk
 > menampilkan before/after (tidak ada commit sebelumnya untuk dibandingkan). File ini berisi
