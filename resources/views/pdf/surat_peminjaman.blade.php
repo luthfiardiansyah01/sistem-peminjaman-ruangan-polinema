@@ -39,15 +39,10 @@
 
     @php
         // Rantai tanda tangan diambil dari t_pengajuan_approval, sudah terurut per urutan_tahap
-        // (lihat PengajuanService::findForCetakSurat()). "Tahap akhir" menentukan siapa yang
-        // dituju di baris Yth. — Wadir II kalau alurnya diperpanjang (ruangan kategori Umum),
-        // atau Ketua Jurusan kalau tidak (lihat PengajuanService::alurApprovalUntukPengajuan()).
+        // (lihat PengajuanService::findForCetakSurat()). Tahap akhir alur saat ini selalu
+        // Ketua Jurusan (belum ada eskalasi tambahan — arahan klien revisi ke-2 poin 1).
         $approvalUrut = $pengajuan->approvals->sortBy('urutan_tahap')->values();
-        $tahapAkhir = $approvalUrut->last();
-        $posisiTujuan = optional(optional($tahapAkhir)->jabatanApproval)->posisi_approval ?? 'Ketua Jurusan';
-        $tujuan = $posisiTujuan === 'Wakil Direktur II'
-            ? ['Wakil Direktur II', 'Politeknik Negeri Malang']
-            : ['Ketua Jurusan Teknologi Informasi', 'Politeknik Negeri Malang'];
+        $tujuan = ['Ketua Jurusan Teknologi Informasi', 'Politeknik Negeri Malang'];
 
         $identitas = function ($user) {
             if (!$user) {
@@ -75,8 +70,7 @@
         // Ikuti pembagian dua blok tanda tangan seperti pada contoh surat resmi
         // (FRM.BAA.03.18.00): blok "Hormat kami," untuk pihak pemohon (Ketua Pelaksana
         // & Ketua Umum/Organisasi), blok "Mengetahui dan menyetujui," untuk seluruh
-        // pihak yang menyetujui berjenjang sesudahnya (DPK, Presiden BEM, Ketua Jurusan,
-        // dan Wadir II bila ada).
+        // pihak yang menyetujui berjenjang sesudahnya (DPK, Presiden BEM, Ketua Jurusan).
         $isPemohon = fn ($a) => in_array(optional($a->jabatanApproval)->posisi_approval, ['Ketua Pelaksana', 'Ketua Umum'], true);
         $blokPemohon = $approvalUrut->filter($isPemohon)->values();
         $blokPenyetuju = $approvalUrut->reject($isPemohon)->values();

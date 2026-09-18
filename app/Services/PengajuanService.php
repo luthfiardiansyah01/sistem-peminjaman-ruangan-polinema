@@ -22,7 +22,7 @@ class PengajuanService
     // Urutan tahap approval berjenjang (FR-6.1). Tahap 0 (Ketua Pelaksana) dipilih bebas
     // per-pengajuan (bukan posisi tetap) — lihat generateApprovalStages(). Tahap 1..N
     // sesudahnya SEKARANG SELALU sekuensial (tidak ada lagi tahap paralel) dan urutannya
-    // berbeda tergantung role pemohon & kategori ruangan — lihat alurApprovalUntukPengajuan().
+    // berbeda tergantung role pemohon — lihat alurApprovalUntukPengajuan().
     protected const STAGE_KETUA_PELAKSANA = 0;
 
     // posisi_approval bukan enum DB (lihat m_jabatan_approval) supaya posisi baru
@@ -211,20 +211,18 @@ class PengajuanService
         $pengajuan->ruangans()->attach($data['ruangan_ids']);
         $this->syncRuanganStatus($data['ruangan_ids'], 'Diajukan');
         $this->syncPanitia($pengajuan, $data);
-        // Refresh & eager-load user + ruangans untuk generateApprovalStages() tanpa query terpisah
-        $pengajuan->refresh()->load(['user', 'ruangans']);
+        // Refresh & eager-load user untuk generateApprovalStages() tanpa query terpisah
+        $pengajuan->refresh()->load('user');
         $this->generateApprovalStages($pengajuan);
         return ['status' => true, 'message' => 'Pengajuan peminjaman berhasil diajukan!', 'pengajuan_id' => $pengajuan->pengajuan_id];
     }
 
     /**
      * Generate seluruh baris tahap approval berjenjang saat pengajuan pertama kali dibuat (FR-6.3).
-     * Alur bercabang menurut role akun pemohon:
+     * Alur bercabang menurut role akun pemohon (role sederhana, belum ada eskalasi berjenjang
+     * tambahan — arahan klien revisi ke-2 poin 1):
      * - Mahasiswa: Ketua Pelaksana -> Ketua Organisasi -> Presiden BEM -> DPK -> Ketua Jurusan
      * - Dosen/Tendik: Ketua Pelaksana -> Ketua Jurusan
-     * Lalu, jika salah satu ruangan yang dipinjam berkategori 'Umum' (fasilitas kampus),
-     * alur di atas ditambah satu tahap eskalasi terakhir ke Wakil Direktur II (arahan klien)
-     * — lihat alurApprovalUntukPengajuan().
      * Seluruhnya SEKUENSIAL (tidak ada lagi tahap paralel). Tahap 0 (Ketua Pelaksana) langsung
      * aktif (batas_waktu diisi); tahap berikutnya dibuat 'Menunggu' tanpa batas_waktu sampai
      * tahap sebelumnya disetujui (lihat processApproval()).
@@ -274,26 +272,17 @@ class PengajuanService
     }
 
     /**
-     * Urutan posisi_approval (tanpa Ketua Pelaksana, sudah ditangani terpisah) untuk sebuah
-     * pengajuan: role akun pemohon menentukan rantai dasarnya, lalu kategori ruangan yang
-     * dipinjam menentukan apakah rantai itu perlu diperpanjang ke Wakil Direktur II.
+     * Urutan posisi_approval (tanpa Ketua Pelaksana, sudah ditangani terpisah) sesuai role
+     * akun pemohon pengajuan. Sederhana sesuai role yang sudah ada — belum ada eskalasi
+     * berjenjang tambahan berdasarkan kategori ruangan (arahan klien revisi ke-2 poin 1).
      */
     protected function alurApprovalUntukPengajuan(PengajuanModel $pengajuan): array
     {
         $role = $pengajuan->user->getRole();
 
-        $alur = in_array($role, [RoleConstants::DOSEN, RoleConstants::TENDIK], true)
+        return in_array($role, [RoleConstants::DOSEN, RoleConstants::TENDIK], true)
             ? ['Ketua Jurusan']
             : ['Ketua Umum', 'Presiden BEM', 'DPK', 'Ketua Jurusan'];
-
-        // Ruangan kategori 'Umum' (fasilitas kampus) butuh eskalasi tambahan ke Wadir II
-        // setelah Ketua Jurusan. Pengajuan dengan ruangan campuran (ada Umum + Jurusan)
-        // dianggap Umum — aturan terketat yang berlaku (arahan klien).
-        if ($pengajuan->ruangans->contains('ruangan_kategori', 'Umum')) {
-            $alur[] = 'Wakil Direktur II';
-        }
-
-        return $alur;
     }
 
     /**
