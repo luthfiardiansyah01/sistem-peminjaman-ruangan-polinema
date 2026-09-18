@@ -103,6 +103,20 @@ longgar `10-16` digit (perilaku sebelumnya, tidak berubah) karena poin 4 memang 
 menunggu konfirmasi klien, dan pengetatan itu sempat membuat 1 test tambahan gagal
 (`PersonModelTest > dosen model validation method works`) yang sekarang sudah lolos lagi.
 
+### Implementasi poin 2 — selesai
+
+[`resources/views/pdf/surat_peminjaman.blade.php`](resources/views/pdf/surat_peminjaman.blade.php) —
+closure `$identitas()` sekarang menerima parameter `$posisi` (posisi_approval si penandatangan).
+Untuk penandatangan dosen di posisi `DPK`, `Ketua Jurusan`, atau `Wakil Direktur II`, label
+identitas ditampilkan **`NIP.`** (bukan `NIDN.`) — sesuai arahan klien bahwa ketiga posisi
+tersebut seharusnya pakai NIP. Posisi dosen lain (mis. `Ketua Pelaksana` kalau dijabat dosen)
+tetap memakai label `NIDN.` seperti semula karena tidak disebut klien dalam poin ini. Nilai yang
+ditampilkan tetap dari kolom `dosen_nip_nidn` yang sama (poin 3) — hanya labelnya yang
+menyesuaikan posisi; sistem belum bisa membedakan otomatis apakah angka yang tersimpan itu
+NIP atau NIDN sungguhan, jadi ini murni soal label sesuai instruksi klien per-posisi.
+
+Verifikasi: `php -l` lolos, `php artisan view:cache` sukses.
+
 > Catatan: direktori ini baru saja di-`git init` dengan satu commit awal ("first commit") yang
 > sudah memuat seluruh perubahan sesi ini — jadi `git diff`/`git log` tidak bisa dipakai untuk
 > menampilkan before/after (tidak ada commit sebelumnya untuk dibandingkan). File ini berisi
