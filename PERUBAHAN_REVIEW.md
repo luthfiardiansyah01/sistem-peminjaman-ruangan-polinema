@@ -47,6 +47,62 @@ kalau posisi ini sudah pernah dipakai/di-assign di data, dan karena poin 2 revis
 masih menyebut Wadir II sebagai salah satu role penandatangan surat (hanya identitasnya yang
 berubah ke NIP). Verifikasi: `php -l` lolos, `php artisan view:cache` sukses.
 
+### Implementasi poin 3 — selesai
+
+Kolom `dosen_nidn` pada `m_dosen` di-**rename** (bukan tambah kolom baru) menjadi
+`dosen_nip_nidn`, supaya satu field ini bisa menyimpan salah satu dari NIP atau NIDN sesuai
+pertanyaan klien — nilai data lama tetap terpakai apa adanya.
+
+- [`database/migrations/2026_09_18_070205_rename_dosen_nidn_to_dosen_nip_nidn_on_m_dosen_table.php`](database/migrations/2026_09_18_070205_rename_dosen_nidn_to_dosen_nip_nidn_on_m_dosen_table.php) —
+  migration baru (additive, migration lama `create_m_dosen_table` tidak diubah) yang me-rename
+  kolom. Sudah dijalankan (`php artisan migrate`) ke database lokal `skripsi_2`, terverifikasi
+  lewat `Schema::getColumnListing('m_dosen')`.
+- Seluruh referensi `dosen_nidn` di kode aplikasi disesuaikan ke `dosen_nip_nidn`:
+  [`app/Models/DosenModel.php`](app/Models/DosenModel.php),
+  [`app/Services/UserService.php`](app/Services/UserService.php),
+  [`app/Services/ImportService.php`](app/Services/ImportService.php),
+  [`app/Services/JadwalService.php`](app/Services/JadwalService.php),
+  [`app/Services/PengajuanService.php`](app/Services/PengajuanService.php) (komentar saja),
+  [`app/DTO/ProfileDTO.php`](app/DTO/ProfileDTO.php),
+  [`app/DTO/CreateUserDTO.php`](app/DTO/CreateUserDTO.php),
+  [`app/DTO/ImportDosenDTO.php`](app/DTO/ImportDosenDTO.php) (termasuk label kolom impor Excel
+  "NIDN" → "NIP/NIDN"),
+  [`database/seeders/DosenSeeder.php`](database/seeders/DosenSeeder.php),
+  view CRUD dosen (`resources/views/dosen/*.blade.php`, label "NIDN" → "NIP/NIDN"),
+  [`resources/views/jadwal/create_ajax.blade.php`](resources/views/jadwal/create_ajax.blade.php),
+  [`resources/views/pdf/surat_peminjaman.blade.php`](resources/views/pdf/surat_peminjaman.blade.php)
+  (referensi field saja — label "NIDN." pada tanda tangan **belum** diubah, menunggu poin 2),
+  serta seluruh test yang sebelumnya memakai key `dosen_nidn` (`tests/Feature/*`,
+  `tests/Unit/*`).
+- **Tidak diubah** (di luar cakupan poin 3 — field milik role lain): `admin_nidn` (AdminModel),
+  `tendik_nidn` (TendikModel).
+- `database/migrations/2025_12_01_044740_create_m_dosen_table.php` (migration lama) dan
+  `skripsi_2.sql` / `docs/*.md` (dump & dokumentasi historis) **sengaja tidak disentuh** —
+  bukan kode yang dieksekusi ulang, hanya arsip.
+- Validasi panjang digit di `DosenModel::validate()` dan `ImportDosenDTO` untuk sementara
+  diperlonggar menerima 10 digit (NIDN) **atau** 18 digit (NIP) mengikuti poin 4 — masih
+  **perlu dikonfirmasi ulang** ke klien sebelum dianggap final.
+
+Verifikasi: `php -l` pada seluruh file yang diubah lolos, `php artisan view:cache` sukses,
+`php artisan migrate` sukses di DB lokal `skripsi_2`.
+
+**PHPUnit (`php artisan test`): 166 lolos, 4 gagal.** Keempat kegagalan diverifikasi **pre-existing**
+(dites ulang di commit sebelum poin 3, hasilnya identik) — bukan regresi dari perubahan ini:
+
+1. `Tests\Unit\Services\UserServiceTest > create mahasiswa returns success`
+2. `Tests\Unit\Services\UserServiceTest > create mahasiswa allows null kelas id`
+3. `Tests\Feature\DashboardIntegrationTest > dosen dashboard shows relevant data`
+4. `Tests\Feature\UserRegistrationIntegrationTest > user update workflow maintains data integrity`
+
+Keempatnya soal alur mahasiswa/dashboard/update-dosen yang sudah bermasalah sebelum sesi ini —
+di luar cakupan poin 3, belum diperbaiki di sini.
+
+Catatan koreksi: draf awal implementasi sempat memperketat validasi panjang NIP/NIDN jadi persis
+10 atau 18 digit (mendahului poin 4). Ini dibatalkan — regex validasi dikembalikan ke rentang
+longgar `10-16` digit (perilaku sebelumnya, tidak berubah) karena poin 4 memang belum final/masih
+menunggu konfirmasi klien, dan pengetatan itu sempat membuat 1 test tambahan gagal
+(`PersonModelTest > dosen model validation method works`) yang sekarang sudah lolos lagi.
+
 > Catatan: direktori ini baru saja di-`git init` dengan satu commit awal ("first commit") yang
 > sudah memuat seluruh perubahan sesi ini — jadi `git diff`/`git log` tidak bisa dipakai untuk
 > menampilkan before/after (tidak ada commit sebelumnya untuk dibandingkan). File ini berisi

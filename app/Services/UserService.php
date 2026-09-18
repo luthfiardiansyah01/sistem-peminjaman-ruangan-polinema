@@ -325,7 +325,7 @@ class UserService implements UserServiceInterface
         $validation = $this->validatePersonPayload($data, [
             'username' => 'username',
             'password' => 'password',
-            'dosen_nidn' => 'dosen_nidn',
+            'dosen_nip_nidn' => 'dosen_nip_nidn',
             'dosen_nama' => 'dosen_nama',
             'prodi_id' => 'prodi_id',
         ], 'dosen');
@@ -340,7 +340,7 @@ class UserService implements UserServiceInterface
         ];
 
         $dosenData = [
-            'dosen_nidn' => trim((string) ($data['dosen_nidn'] ?? '')),
+            'dosen_nip_nidn' => trim((string) ($data['dosen_nip_nidn'] ?? '')),
             'dosen_nama' => trim((string) ($data['dosen_nama'] ?? '')),
             'dosen_noHp' => isset($data['dosen_noHp']) && $data['dosen_noHp'] !== '' ? trim((string) $data['dosen_noHp']) : null,
             'prodi_id' => (int) ($data['prodi_id'] ?? 0),
@@ -379,7 +379,7 @@ class UserService implements UserServiceInterface
      * Update dosen (m_user + m_dosen) sekaligus.
      *
      * updateUser() generik hanya menulis ke m_user, jadi field dosen
-     * (dosen_nama, dosen_nidn, dosen_noHp, prodi_id) tidak boleh lewat situ.
+     * (dosen_nama, dosen_nip_nidn, dosen_noHp, prodi_id) tidak boleh lewat situ.
      *
      * @param int $userId
      * @param array $data
@@ -413,7 +413,7 @@ class UserService implements UserServiceInterface
 
         $dosenData = [
             'dosen_nama' => trim((string) ($data['dosen_nama'] ?? '')),
-            'dosen_nidn' => trim((string) ($data['dosen_nidn'] ?? '')),
+            'dosen_nip_nidn' => trim((string) ($data['dosen_nip_nidn'] ?? '')),
             'dosen_noHp' => isset($data['dosen_noHp']) && $data['dosen_noHp'] !== '' ? trim((string) $data['dosen_noHp']) : null,
             'prodi_id' => isset($data['prodi_id']) && $data['prodi_id'] !== '' ? (int) $data['prodi_id'] : null,
         ];

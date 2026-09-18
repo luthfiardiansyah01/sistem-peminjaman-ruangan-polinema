@@ -30,19 +30,19 @@ class ImportDosenDTO extends ImportUserDTO
      */
     public static function getIdentifierFieldName(): string
     {
-        return 'NIDN';
+        return 'NIP/NIDN';
     }
-    
+
     /**
      * Create ImportDosenDTO from Excel row data
-     * 
+     *
      * @param array $rowData Excel row data
      * @return self
      */
     public static function fromExcelRow(array $rowData): self
     {
         return new self(
-            $rowData[0] ?? '', // NIDN
+            $rowData[0] ?? '', // NIP/NIDN
             $rowData[1] ?? '', // Nama
             $rowData[2] ?? null, // No HP
             $rowData[3] ?? null, // Email
@@ -58,11 +58,12 @@ class ImportDosenDTO extends ImportUserDTO
      */
     protected function validateConcrete(array &$errors): void
     {
-        // Identifier validation (NIDN)
+        // Identifier validation (NIP/NIDN) — aturan panjang final per jenis (NIDN 10 / NIP 18,
+        // revisi ke-2 poin 4) belum diterapkan, masih perlu dikonfirmasi ulang oleh klien.
         if (empty($this->identifier)) {
-            $errors['identifier'] = ['NIDN wajib diisi'];
+            $errors['identifier'] = ['NIP/NIDN wajib diisi'];
         } elseif (!preg_match('/^[0-9]{10,16}$/', $this->identifier)) {
-            $errors['identifier'] = ['NIDN harus berupa angka 10-16 digit'];
+            $errors['identifier'] = ['NIP/NIDN harus berupa angka 10-16 digit'];
         }
         
         // Name validation

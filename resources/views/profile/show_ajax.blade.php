@@ -30,7 +30,7 @@
                     <i class="fas fa-id-card text-primary mr-2"></i>
                     <span class="text-secondary">
                         @if($role == 'ADM') {{ $data->admin_nidn ?? '-' }}
-                        @elseif($role == 'DSN') {{ $data->dosen_nidn ?? '-' }}
+                        @elseif($role == 'DSN') {{ $data->dosen_nip_nidn ?? '-' }}
                         @elseif($role == 'TDK') {{ $data->tendik_nidn ?? '-' }}
                         @elseif($role == 'MHS') {{ $data->mahasiswa_nim ?? '-' }}
                         @endif
@@ -94,7 +94,7 @@
                     <i class="fas fa-id-card text-primary mr-2"></i>
                     <span class="text-secondary">
                         @if($role == 'ADM') {{ $data->admin_nidn ?? '-' }}
-                        @elseif($role == 'DSN') {{ $data->dosen_nidn ?? '-' }}
+                        @elseif($role == 'DSN') {{ $data->dosen_nip_nidn ?? '-' }}
                         @elseif($role == 'TDK') {{ $data->tendik_nidn ?? '-' }}
                         @elseif($role == 'MHS') {{ $data->mahasiswa_nim ?? '-' }}
                         @endif
@@ -146,7 +146,7 @@
                     <i class="fas fa-id-card text-primary mr-2"></i>
                     <span class="text-secondary">
                         @if($role == 'ADM') {{ $data->admin_nidn ?? '-' }}
-                        @elseif($role == 'DSN') {{ $data->dosen_nidn ?? '-' }}
+                        @elseif($role == 'DSN') {{ $data->dosen_nip_nidn ?? '-' }}
                         @elseif($role == 'TDK') {{ $data->tendik_nidn ?? '-' }}
                         @elseif($role == 'MHS') {{ $data->mahasiswa_nim ?? '-' }}
                         @endif

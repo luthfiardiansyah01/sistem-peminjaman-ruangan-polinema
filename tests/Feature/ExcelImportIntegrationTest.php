@@ -113,7 +113,7 @@ class ExcelImportIntegrationTest extends TestCase
             $this->assertNotNull($user);
             $this->assertDatabaseHas('m_dosen', [
                 'user_id' => $user->user_id,
-                'dosen_nidn' => $row[0],
+                'dosen_nip_nidn' => $row[0],
                 'dosen_nama' => $row[1],
             ]);
         }
@@ -170,7 +170,7 @@ class ExcelImportIntegrationTest extends TestCase
         ]);
         DosenModel::create([
             'user_id' => $existingDosen->user_id,
-            'dosen_nidn' => '9999999999',
+            'dosen_nip_nidn' => '9999999999',
             'dosen_nama' => 'Existing Dosen',
             'prodi_id' => 1,
             'dosen_noHp' => '08199999999',
@@ -197,9 +197,9 @@ class ExcelImportIntegrationTest extends TestCase
 
         // Transaction rolled back: only the pre-existing dosen remains
         $this->assertEquals(1, DosenModel::count());
-        $this->assertDatabaseHas('m_dosen', ['dosen_nidn' => '9999999999', 'dosen_nama' => 'Existing Dosen']);
-        $this->assertDatabaseMissing('m_dosen', ['dosen_nidn' => '1111111111']);
-        $this->assertDatabaseMissing('m_dosen', ['dosen_nidn' => '2222222222']);
+        $this->assertDatabaseHas('m_dosen', ['dosen_nip_nidn' => '9999999999', 'dosen_nama' => 'Existing Dosen']);
+        $this->assertDatabaseMissing('m_dosen', ['dosen_nip_nidn' => '1111111111']);
+        $this->assertDatabaseMissing('m_dosen', ['dosen_nip_nidn' => '2222222222']);
     }
 
     public function test_excel_import_with_invalid_prodi_rolls_back()

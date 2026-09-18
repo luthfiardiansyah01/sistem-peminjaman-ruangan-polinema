@@ -66,7 +66,7 @@ class DashboardIntegrationTest extends TestCase
             $dosenUser = UserModel::create(['username' => 'dosen' . $i, 'password' => Hash::make('password'), 'level_id' => 2]);
             DosenModel::create([
                 'user_id' => $dosenUser->user_id,
-                'dosen_nidn' => str_pad((string) $i, 10, '0', STR_PAD_LEFT),
+                'dosen_nip_nidn' => str_pad((string) $i, 10, '0', STR_PAD_LEFT),
                 'dosen_nama' => 'Dosen ' . $i,
                 'dosen_noHp' => '0833333333' . $i,
                 'prodi_id' => ($i % 2 == 0) ? 2 : 1,
@@ -289,7 +289,7 @@ class DashboardIntegrationTest extends TestCase
         $newDosenUser = UserModel::create(['username' => 'newdosen', 'password' => Hash::make('password'), 'level_id' => 2]);
         DosenModel::create([
             'user_id' => $newDosenUser->user_id,
-            'dosen_nidn' => '9999999999',
+            'dosen_nip_nidn' => '9999999999',
             'dosen_nama' => 'New Dosen',
             'dosen_noHp' => '08999999999',
             'prodi_id' => 1,

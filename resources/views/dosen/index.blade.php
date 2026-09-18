@@ -62,7 +62,7 @@
             <thead style="background-color: #e3e3e3; font-color: #3F3F3F;">
                 <tr>
                     <th>No.</th>
-                    <th>NIDN</th>
+                    <th>NIP/NIDN</th>
                     <th>Nama</th>
                     <th>Program Studi</th>
                     <th>Nomor HP</th>
@@ -73,7 +73,7 @@
                 @foreach($dosens as $key => $dosen)
                 <tr>
                     <td>{{ $key + 1 }}.</td>
-                    <td>{{ $dosen->dosen_nidn }}</td>
+                    <td>{{ $dosen->dosen_nip_nidn }}</td>
                     <td>{{ Str::limit($dosen->dosen_nama, 50, '...') }}</td>
                     <td>{{ $dosen->prodi ? $dosen->prodi->prodi_kode : '-' }}</td>
                     <td>{{ $dosen->dosen_noHp }}</td>

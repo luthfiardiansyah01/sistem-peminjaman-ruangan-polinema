@@ -133,7 +133,7 @@
                                 $namaLengkap = $user->mahasiswa->mahasiswa_nama . ' (' . $user->mahasiswa->mahasiswa_nim . ')';
                             } elseif ($levelKode == 'DSN' && $user->dosen) {
                                 $prodiId = $user->dosen->prodi_id;
-                                $namaLengkap = $user->dosen->dosen_nama . ' (' . $user->dosen->dosen_nidn . ')';
+                                $namaLengkap = $user->dosen->dosen_nama . ' (' . $user->dosen->dosen_nip_nidn . ')';
                             } elseif ($levelKode == 'TDK' && $user->tendik) {
                                 $namaLengkap = $user->tendik->tendik_nama . ' (' . $user->tendik->tendik_nidn . ')';
                             } elseif ($levelKode == 'ADM' && $user->admin) {

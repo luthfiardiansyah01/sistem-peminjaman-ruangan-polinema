@@ -418,7 +418,7 @@ class CreateUserDTO
                 break;
                 
             case 'DSN':
-                $data['dosen_nidn'] = $this->identifier;
+                $data['dosen_nip_nidn'] = $this->identifier;
                 $data['dosen_nama'] = $this->name;
                 $data['dosen_noHp'] = $this->phoneNumber;
                 $data['prodi_id'] = $this->prodiId;

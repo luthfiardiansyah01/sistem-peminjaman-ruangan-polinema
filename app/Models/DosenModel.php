@@ -12,7 +12,7 @@ class DosenModel extends Model
     use HasFactory;
     protected $table= 'm_dosen'; //mendefinisikan nama tabel yang akan digunakan
     protected $primaryKey = 'dosen_id';
-    protected $fillable = ['user_id', 'prodi_id', 'dosen_nama','dosen_nidn','dosen_noHp','created_at','updated_at'];
+    protected $fillable = ['user_id', 'prodi_id', 'dosen_nama','dosen_nip_nidn','dosen_noHp','created_at','updated_at'];
 
     public function user(): BelongsTo
     {
@@ -35,9 +35,13 @@ class DosenModel extends Model
     {
         $errors = [];
         
-        // Validate NIDN format (should be numeric and length 10-16)
-        if (!preg_match('/^\d{10,16}$/', $this->dosen_nidn)) {
-            $errors['dosen_nidn'] = 'NIDN harus berupa angka dengan panjang 10-16 digit';
+        // Validate NIP/NIDN format: field ini sekarang menyimpan salah satu dari dua jenis
+        // identitas dosen (klien revisi ke-2 poin 3). Aturan panjang digit final per jenis
+        // (NIDN 10 / NIP 18 — klien revisi ke-2 poin 4) BELUM diterapkan di sini karena masih
+        // perlu dikonfirmasi ulang oleh klien; range longgar existing (10-16 digit) dipertahankan
+        // sampai konfirmasi itu turun, supaya data/NIDN yang sudah ada tidak mendadak invalid.
+        if (!preg_match('/^\d{10,16}$/', $this->dosen_nip_nidn)) {
+            $errors['dosen_nip_nidn'] = 'NIP/NIDN harus berupa angka dengan panjang 10-16 digit';
         }
         
         // Validate name (should not be empty)
@@ -80,7 +84,7 @@ class DosenModel extends Model
             'Dosen',
             $this->created_at ?? now(),
             $this->updated_at ?? now(),
-            $this->dosen_nidn,
+            $this->dosen_nip_nidn,
             $this->dosen_noHp,
             $this->prodi ? $this->prodi->prodi_nama : null
         );
@@ -108,7 +112,7 @@ class DosenModel extends Model
         return [
             'id' => $this->dosen_id,
             'name' => $this->dosen_nama,
-            'nidn' => $this->dosen_nidn,
+            'nidn' => $this->dosen_nip_nidn,
             'phone' => $this->dosen_noHp,
             'prodi' => $this->prodi ? $this->prodi->prodi_nama : null,
             'user' => $this->user ? [

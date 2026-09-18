@@ -32,10 +32,10 @@
             </div>
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    <label class="font-weight-bold text-dark">NIDN</label>
+                    <label class="font-weight-bold text-dark">NIP/NIDN</label>
                     <div class="d-flex align-items-center">
                         <i class="fas fa-id-card mr-2 text-primary"></i>
-                        <span class="text-secondary">{{ $dosen->dosen_nidn }}</span>
+                        <span class="text-secondary">{{ $dosen->dosen_nip_nidn }}</span>
                     </div>
                 </div>
                 <div class="col-md-6 mb-4">

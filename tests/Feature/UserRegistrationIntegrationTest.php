@@ -111,7 +111,7 @@ class UserRegistrationIntegrationTest extends TestCase
         $dosenData = [
             'username' => 'newdosen',
             'password' => 'password123',
-            'dosen_nidn' => '2222222222',
+            'dosen_nip_nidn' => '2222222222',
             'dosen_nama' => 'New Dosen',
             'dosen_noHp' => '08133333333',
             'prodi_id' => 1,
@@ -129,7 +129,7 @@ class UserRegistrationIntegrationTest extends TestCase
         $this->assertNotNull($user);
         $this->assertDatabaseHas('m_dosen', [
             'user_id' => $user->user_id,
-            'dosen_nidn' => '2222222222',
+            'dosen_nip_nidn' => '2222222222',
             'dosen_nama' => 'New Dosen',
         ]);
 
@@ -241,7 +241,7 @@ class UserRegistrationIntegrationTest extends TestCase
         $dosenData = [
             'username' => 'updatable',
             'password' => 'password123',
-            'dosen_nidn' => '5555555555',
+            'dosen_nip_nidn' => '5555555555',
             'dosen_nama' => 'Original Name',
             'dosen_noHp' => '08177777777',
             'prodi_id' => 1,

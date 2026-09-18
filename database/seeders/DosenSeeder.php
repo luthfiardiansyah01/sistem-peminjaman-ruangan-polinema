@@ -19,7 +19,7 @@ class DosenSeeder extends Seeder
                 'user_id'   => 2,
                 'prodi_id'  => 1,
                 'dosen_nama'  => 'Dosen 1',
-                'dosen_nidn'  => '198111111111111111',
+                'dosen_nip_nidn'  => '198111111111111111',
                 'dosen_noHp'  => '08111111111',
             ],
             [
@@ -27,7 +27,7 @@ class DosenSeeder extends Seeder
                 'user_id'   => 7,
                 'prodi_id'  => 1,
                 'dosen_nama'  => 'Dosen 2',
-                'dosen_nidn'  => '198222222222222222',
+                'dosen_nip_nidn'  => '198222222222222222',
                 'dosen_noHp'  => '08122222222',
             ],
             [
@@ -35,7 +35,7 @@ class DosenSeeder extends Seeder
                 'user_id'   => 8,
                 'prodi_id'  => 1,
                 'dosen_nama'  => 'Ketua Jurusan',
-                'dosen_nidn'  => '198333333333333333',
+                'dosen_nip_nidn'  => '198333333333333333',
                 'dosen_noHp'  => '08133333333',
             ],
             [
@@ -43,7 +43,7 @@ class DosenSeeder extends Seeder
                 'user_id'   => 9,
                 'prodi_id'  => 1,
                 'dosen_nama'  => 'Wadir 2',
-                'dosen_nidn'  => '198444444444444444',
+                'dosen_nip_nidn'  => '198444444444444444',
                 'dosen_noHp'  => '08144444444',
             ],
         ];

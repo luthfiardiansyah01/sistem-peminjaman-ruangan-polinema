@@ -91,7 +91,7 @@ class PersonModelTest extends TestCase
     public function dosen_model_validation_method_works()
     {
         $dosen = new DosenModel([
-            'dosen_nidn' => '123456789012',
+            'dosen_nip_nidn' => '123456789012',
             'dosen_nama' => 'Test Dosen',
             'dosen_noHp' => '081234567890',
             'prodi_id' => 1,
@@ -102,12 +102,12 @@ class PersonModelTest extends TestCase
         $this->assertEmpty($errors, 'Valid dosen data should return empty validation errors');
         
         // Test invalid NIDN
-        $dosen->dosen_nidn = '123';
+        $dosen->dosen_nip_nidn = '123';
         $errors = $dosen->validate();
-        $this->assertArrayHasKey('dosen_nidn', $errors);
+        $this->assertArrayHasKey('dosen_nip_nidn', $errors);
         
         // Test empty prodi_id
-        $dosen->dosen_nidn = '123456789012';
+        $dosen->dosen_nip_nidn = '123456789012';
         $dosen->prodi_id = null;
         $errors = $dosen->validate();
         $this->assertArrayHasKey('prodi_id', $errors);
@@ -119,7 +119,7 @@ class PersonModelTest extends TestCase
         $dosen = new DosenModel([
             'dosen_id' => 1,
             'user_id' => 1,
-            'dosen_nidn' => '123456789012',
+            'dosen_nip_nidn' => '123456789012',
             'dosen_nama' => 'Test Dosen',
             'dosen_noHp' => '081234567890',
             'created_at' => now(),
@@ -274,7 +274,7 @@ class PersonModelTest extends TestCase
         $dosen = new DosenModel([
             'dosen_id' => 1,
             'dosen_nama' => 'Test Dosen',
-            'dosen_nidn' => '123456789012',
+            'dosen_nip_nidn' => '123456789012',
             'dosen_noHp' => '081234567890',
         ]);
         
@@ -326,7 +326,7 @@ class PersonModelTest extends TestCase
         $dosen = new DosenModel([
             'user_id' => 2,
             'dosen_nama' => 'Test Dosen',
-            'dosen_nidn' => '123456789012',
+            'dosen_nip_nidn' => '123456789012',
             'dosen_noHp' => '081234567890',
             'created_at' => now(),
             'updated_at' => now(),

@@ -121,7 +121,7 @@ class ImportService implements ImportServiceInterface
                     'password' => Hash::make($nidn),
                     'level_id' => $levelDosen->level_id,
                 ], [
-                    'dosen_nidn' => $nidn,
+                    'dosen_nip_nidn' => $nidn,
                     'dosen_nama' => $nama,
                     'dosen_noHp' => $noHp,
                     'prodi_id' => $prodiId,

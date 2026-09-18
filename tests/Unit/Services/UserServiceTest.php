@@ -188,7 +188,7 @@ class UserServiceTest extends TestCase
         $levelService->shouldReceive('getLevelByKode')->with('DSN')->andReturn($levelModel);
         
         $dosenData = [
-            'dosen_nidn' => '0123456789',
+            'dosen_nip_nidn' => '0123456789',
             'dosen_nama' => 'Dosen Test',
             'dosen_noHp' => '08123456789',
             'prodi_id' => 1,
@@ -213,7 +213,7 @@ class UserServiceTest extends TestCase
         $data = [
             'username' => 'dosen123',
             'password' => 'password123',
-            'dosen_nidn' => '0123456789',
+            'dosen_nip_nidn' => '0123456789',
             'dosen_nama' => 'Dosen Test',
             'dosen_noHp' => '08123456789',
             'prodi_id' => 1,
@@ -567,7 +567,7 @@ class UserServiceTest extends TestCase
         $data = [
             'username' => 'dosen123',
             'password' => 'password123',
-            'dosen_nidn' => '0123456789',
+            'dosen_nip_nidn' => '0123456789',
             'dosen_nama' => 'Dosen Test',
             'dosen_noHp' => '08123456789',
             'prodi_id' => 1,

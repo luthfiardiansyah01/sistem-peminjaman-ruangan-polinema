@@ -49,7 +49,7 @@
                 return '-';
             }
             if ($user->dosen) {
-                return 'NIDN. ' . $user->dosen->dosen_nidn;
+                return 'NIDN. ' . $user->dosen->dosen_nip_nidn;
             }
             if ($user->mahasiswa) {
                 return 'NIM. ' . $user->mahasiswa->mahasiswa_nim;

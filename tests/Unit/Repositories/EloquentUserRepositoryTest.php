@@ -495,7 +495,7 @@ class EloquentUserRepositoryTest extends TestCase
     {
         // Arrange
         $userData = ['username' => 'dosenuser', 'password' => 'hashed'];
-        $dosenData = ['dosen_nidn' => '12345'];
+        $dosenData = ['dosen_nip_nidn' => '12345'];
         
         $userModel = Mockery::mock(UserModel::class);
         $adminModel = Mockery::mock(AdminModel::class);
@@ -532,7 +532,7 @@ class EloquentUserRepositoryTest extends TestCase
             ->andReturn(1);
         
         $dosenModel->shouldReceive('create')
-            ->with(['dosen_nidn' => '12345', 'user_id' => 1])
+            ->with(['dosen_nip_nidn' => '12345', 'user_id' => 1])
             ->once()
             ->andReturn($mockDosen);
 

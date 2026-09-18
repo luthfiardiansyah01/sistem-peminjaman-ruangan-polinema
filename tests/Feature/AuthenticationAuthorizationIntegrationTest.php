@@ -55,7 +55,7 @@ class AuthenticationAuthorizationIntegrationTest extends TestCase
         $dosenUser = UserModel::create(['username' => 'dosen', 'password' => Hash::make('dosen123'), 'level_id' => 2]);
         DosenModel::create([
             'user_id' => $dosenUser->user_id,
-            'dosen_nidn' => '1111111111',
+            'dosen_nip_nidn' => '1111111111',
             'dosen_nama' => 'Dr. Dosen',
             'dosen_noHp' => '08222222222',
             'prodi_id' => 1,
