@@ -29,9 +29,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>NIP/NIDN</label>
-                        <input type="text" class="form-control" id="dosen_nip_nidn" name="dosen_nip_nidn" value="{{ $dosen->dosen_nip_nidn }}" required>
-                        <small id="error-dosen_nip_nidn" class="error-text form-text text-danger"></small>
+                        <label>NIP</label>
+                        <input type="text" class="form-control" id="dosen_nip" name="dosen_nip" value="{{ $dosen->dosen_nip }}" placeholder="18 digit, isi salah satu dengan NIDN">
+                        <small id="error-dosen_nip" class="error-text form-text text-danger"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>NIDN</label>
+                        <input type="text" class="form-control" id="dosen_nidn" name="dosen_nidn" value="{{ $dosen->dosen_nidn }}" placeholder="10 digit, isi salah satu dengan NIP">
+                        <small id="error-dosen_nidn" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Prodi</label>

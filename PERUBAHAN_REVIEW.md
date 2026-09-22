@@ -154,6 +154,53 @@ saat ini. Perbedaan yang ditemukan & disesuaikan:
 - Footer nomor form "FRM.BAA.03.18.00" tidak ditambahkan — itu nomor form khusus untuk form
   peminjaman gedung fasilitas umum tersebut, bukan form ruangan JTI ini.
 
+### Update poin 3/4 — klien konfirmasi, field dipecah jadi dosen_nip + dosen_nidn
+
+Klien konfirmasi (2026-09-22): NIDN 10 digit, NIP 18 digit (final, poin 4 selesai) — dan ada
+dosen yang punya **NIP dan NIDN sekaligus**, dengan **NIP diprioritaskan** tampil di surat. Ini
+mengubah pendekatan poin 3 sebelumnya (field gabungan `dosen_nip_nidn`) karena satu field tidak
+cukup kalau dosen punya keduanya.
+
+- [`database/migrations/2026_09_22_072020_split_dosen_nip_nidn_into_two_columns.php`](database/migrations/2026_09_22_072020_split_dosen_nip_nidn_into_two_columns.php) —
+  migration baru (additive): tambah `dosen_nip` (nullable, 18) + `dosen_nidn` (nullable, 10),
+  backfill data lama berdasar panjang digit (18→NIP, selain itu→NIDN), lalu drop
+  `dosen_nip_nidn`. Sudah dijalankan ke DB lokal `skripsi_2` & diverifikasi datanya pindah benar.
+- [`app/Models/DosenModel.php`](app/Models/DosenModel.php) — `validate()` sekarang: minimal
+  satu dari NIP/NIDN wajib diisi, format masing-masing persis 18/10 digit (bukan lagi rentang
+  longgar). Method baru `identitasUtama()`: NIP diprioritaskan, fallback NIDN.
+- [`app/Services/UserService.php`](app/Services/UserService.php) — `createDosen()` wajib salah
+  satu identitas; `updateDosen()` hanya menulis `dosen_nip`/`dosen_nidn` kalau memang dikirim di
+  payload (tidak lagi overwrite ke `''` saat update parsial — perbaikan bug lama sekalian).
+- [`app/Services/ImportService.php`](app/Services/ImportService.php),
+  [`app/DTO/CreateUserDTO.php`](app/DTO/CreateUserDTO.php) — kolom identifier tunggal (Excel
+  import / registrasi generik) dipetakan otomatis: 18 digit → `dosen_nip`, selain itu →
+  `dosen_nidn`.
+- [`app/DTO/ProfileDTO.php`](app/DTO/ProfileDTO.php),
+  [`resources/views/pdf/surat_peminjaman.blade.php`](resources/views/pdf/surat_peminjaman.blade.php),
+  view CRUD dosen & profile — semua pakai `identitasUtama()` / cek `dosen_nip` langsung, NIP
+  selalu diprioritaskan. Logika paksa-label-NIP-per-posisi dari poin 2 (`$posisiPakaiNip`)
+  **dihapus** — sudah tidak diperlukan karena sekarang datanya sendiri yang menentukan (lebih
+  akurat daripada menebak dari posisi jabatan).
+- View create/edit dosen: 1 input "NIP/NIDN" dipecah jadi 2 input terpisah (NIP, NIDN).
+- [`database/seeders/DosenSeeder.php`](database/seeders/DosenSeeder.php) — "Dosen 1" diberi
+  NIP+NIDN sekaligus sebagai contoh kasus ini.
+- Seluruh test yang pakai key `dosen_nip_nidn` disesuaikan (`dosen_nidn` untuk nilai 10 digit).
+
+Verifikasi: `php -l` & `php artisan view:cache` lolos, migration sukses + data terverifikasi
+pindah benar, `php artisan test` → **166 lolos, 4 gagal** (4 kegagalan sama seperti sebelumnya,
+sudah diverifikasi pre-existing & tidak terkait — lihat catatan poin 3 di atas).
+
+### Klarifikasi poin 5 lanjutan (2026-09-22) — tidak ada perubahan kode
+
+Klien ditanya soal approver tambahan di template `FRM.BAA.03.18.00` yang sempat tertunda
+(lihat catatan "Yang SENGAJA tidak diikuti dari template" di atas). Jawaban klien:
+
+1. **Eskalasi approval (Wakil Direktur) untuk ruangan/gedung kategori Umum: JANGAN dulu** —
+   konsisten dengan poin 1, tidak ada perubahan kode diperlukan.
+2. **Nama jabatan yang benar: Wakil Direktur II** (bukan III) — bagian tanda tangan di template
+   klien yang salah ketik/belum di-update; bagian "Yth." (Wadir II) yang benar. Dicatat untuk
+   referensi kalau fitur eskalasi ini diaktifkan di masa depan.
+
 **Verifikasi visual — selesai.** Dibuat 1 pengajuan uji sementara (Diterima, approval lengkap
 Ketua Pelaksana/Ketua Umum/Presiden BEM/DPK/Ketua Jurusan) lalu di-render lewat
 `Pdf::loadView('pdf.surat_peminjaman', ...)` yang sama persis dengan yang dipakai

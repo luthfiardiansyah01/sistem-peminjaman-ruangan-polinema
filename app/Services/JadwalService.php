@@ -127,14 +127,14 @@ class JadwalService
             // View create_ajax/edit_ajax mengakses properti berikut:
             // - $user->level->level_kode, $user->level->level_nama
             // - $user->mahasiswa->mahasiswa_nama, mahasiswa_nim, prodi_id, kelas_id
-            // - $user->dosen->dosen_nama, dosen_nip_nidn, prodi_id
+            // - $user->dosen->dosen_nama, dosen_nip, dosen_nidn, prodi_id
             // - $user->tendik->tendik_nama, tendik_nidn
             // - $user->admin->admin_nama, admin_nidn
             // Relasi belongsTo membutuhkan foreign key (user_id) di kolom seleksi agar terhubung.
             'userList' => UserModel::select('user_id', 'username')->with([
                 'level:level_id,level_kode,level_nama',
                 'admin:user_id,admin_nama,admin_nidn',
-                'dosen:user_id,dosen_nama,dosen_nip_nidn,prodi_id',
+                'dosen:user_id,dosen_nama,dosen_nip,dosen_nidn,prodi_id',
                 'tendik:user_id,tendik_nama,tendik_nidn',
                 'mahasiswa:user_id,mahasiswa_nama,mahasiswa_nim,prodi_id,kelas_id',
             ])->get(),

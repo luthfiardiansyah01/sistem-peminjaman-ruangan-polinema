@@ -91,23 +91,23 @@ class PersonModelTest extends TestCase
     public function dosen_model_validation_method_works()
     {
         $dosen = new DosenModel([
-            'dosen_nip_nidn' => '123456789012',
+            'dosen_nidn' => '1234567890',
             'dosen_nama' => 'Test Dosen',
             'dosen_noHp' => '081234567890',
             'prodi_id' => 1,
         ]);
 
         $errors = $dosen->validate();
-        
+
         $this->assertEmpty($errors, 'Valid dosen data should return empty validation errors');
-        
+
         // Test invalid NIDN
-        $dosen->dosen_nip_nidn = '123';
+        $dosen->dosen_nidn = '123';
         $errors = $dosen->validate();
-        $this->assertArrayHasKey('dosen_nip_nidn', $errors);
-        
+        $this->assertArrayHasKey('dosen_nidn', $errors);
+
         // Test empty prodi_id
-        $dosen->dosen_nip_nidn = '123456789012';
+        $dosen->dosen_nidn = '1234567890';
         $dosen->prodi_id = null;
         $errors = $dosen->validate();
         $this->assertArrayHasKey('prodi_id', $errors);
@@ -119,7 +119,7 @@ class PersonModelTest extends TestCase
         $dosen = new DosenModel([
             'dosen_id' => 1,
             'user_id' => 1,
-            'dosen_nip_nidn' => '123456789012',
+            'dosen_nidn' => '1234567890',
             'dosen_nama' => 'Test Dosen',
             'dosen_noHp' => '081234567890',
             'created_at' => now(),
@@ -127,10 +127,10 @@ class PersonModelTest extends TestCase
         ]);
 
         $profile = $dosen->getProfile();
-        
+
         $this->assertInstanceOf(ProfileDTO::class, $profile);
         $this->assertEquals('Test Dosen', $profile->displayName);
-        $this->assertEquals('123456789012', $profile->personIdentifier);
+        $this->assertEquals('1234567890', $profile->personIdentifier);
         $this->assertEquals('081234567890', $profile->phoneNumber);
         $this->assertEquals('DSN', $profile->roleCode);
         $this->assertEquals('Dosen', $profile->roleName);
@@ -274,7 +274,7 @@ class PersonModelTest extends TestCase
         $dosen = new DosenModel([
             'dosen_id' => 1,
             'dosen_nama' => 'Test Dosen',
-            'dosen_nip_nidn' => '123456789012',
+            'dosen_nidn' => '1234567890',
             'dosen_noHp' => '081234567890',
         ]);
         
@@ -326,7 +326,7 @@ class PersonModelTest extends TestCase
         $dosen = new DosenModel([
             'user_id' => 2,
             'dosen_nama' => 'Test Dosen',
-            'dosen_nip_nidn' => '123456789012',
+            'dosen_nidn' => '1234567890',
             'dosen_noHp' => '081234567890',
             'created_at' => now(),
             'updated_at' => now(),

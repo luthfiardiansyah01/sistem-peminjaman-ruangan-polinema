@@ -325,12 +325,16 @@ class UserService implements UserServiceInterface
         $validation = $this->validatePersonPayload($data, [
             'username' => 'username',
             'password' => 'password',
-            'dosen_nip_nidn' => 'dosen_nip_nidn',
             'dosen_nama' => 'dosen_nama',
             'prodi_id' => 'prodi_id',
         ], 'dosen');
         if ($validation) {
             return $validation;
+        }
+
+        $identitasValidation = $this->validateIdentitasDosen($data);
+        if ($identitasValidation) {
+            return $identitasValidation;
         }
 
         $userData = [
@@ -340,7 +344,8 @@ class UserService implements UserServiceInterface
         ];
 
         $dosenData = [
-            'dosen_nip_nidn' => trim((string) ($data['dosen_nip_nidn'] ?? '')),
+            'dosen_nip' => !empty($data['dosen_nip']) ? trim((string) $data['dosen_nip']) : null,
+            'dosen_nidn' => !empty($data['dosen_nidn']) ? trim((string) $data['dosen_nidn']) : null,
             'dosen_nama' => trim((string) ($data['dosen_nama'] ?? '')),
             'dosen_noHp' => isset($data['dosen_noHp']) && $data['dosen_noHp'] !== '' ? trim((string) $data['dosen_noHp']) : null,
             'prodi_id' => (int) ($data['prodi_id'] ?? 0),
@@ -379,7 +384,7 @@ class UserService implements UserServiceInterface
      * Update dosen (m_user + m_dosen) sekaligus.
      *
      * updateUser() generik hanya menulis ke m_user, jadi field dosen
-     * (dosen_nama, dosen_nip_nidn, dosen_noHp, prodi_id) tidak boleh lewat situ.
+     * (dosen_nama, dosen_nip, dosen_nidn, dosen_noHp, prodi_id) tidak boleh lewat situ.
      *
      * @param int $userId
      * @param array $data
@@ -411,12 +416,24 @@ class UserService implements UserServiceInterface
             $userData['password'] = Hash::make((string) $data['password']);
         }
 
+        // dosen_nip/dosen_nidn hanya ditulis kalau memang dikirim di payload — update parsial
+        // (mis. cuma ganti dosen_nama) tidak boleh menghapus identitas yang sudah tersimpan.
+        $identitasValidation = $this->validateIdentitasDosen($data, requireAtLeastOne: false);
+        if ($identitasValidation) {
+            return $identitasValidation;
+        }
+
         $dosenData = [
             'dosen_nama' => trim((string) ($data['dosen_nama'] ?? '')),
-            'dosen_nip_nidn' => trim((string) ($data['dosen_nip_nidn'] ?? '')),
             'dosen_noHp' => isset($data['dosen_noHp']) && $data['dosen_noHp'] !== '' ? trim((string) $data['dosen_noHp']) : null,
             'prodi_id' => isset($data['prodi_id']) && $data['prodi_id'] !== '' ? (int) $data['prodi_id'] : null,
         ];
+        if (isset($data['dosen_nip'])) {
+            $dosenData['dosen_nip'] = $data['dosen_nip'] !== '' ? trim((string) $data['dosen_nip']) : null;
+        }
+        if (isset($data['dosen_nidn'])) {
+            $dosenData['dosen_nidn'] = $data['dosen_nidn'] !== '' ? trim((string) $data['dosen_nidn']) : null;
+        }
 
         try {
             $dosen = $this->userRepository->updateDosen($userId, $userData, $dosenData);
@@ -712,6 +729,47 @@ class UserService implements UserServiceInterface
                     'errors' => [$field => "Field {$field} wajib diisi"]
                 ];
             }
+        }
+
+        return null;
+    }
+
+    /**
+     * Validasi field identitas dosen (dosen_nip / dosen_nidn): dosen bisa punya salah satu
+     * atau keduanya sekaligus (klien revisi ke-2 poin 4 konfirmasi). Panjang digit final:
+     * NIDN 10 digit, NIP 18 digit.
+     *
+     * @param array $data
+     * @param bool $requireAtLeastOne Wajibkan minimal satu diisi (create) atau tidak (update parsial)
+     * @return array|null
+     */
+    protected function validateIdentitasDosen(array $data, bool $requireAtLeastOne = true): ?array
+    {
+        $nip = trim((string) ($data['dosen_nip'] ?? ''));
+        $nidn = trim((string) ($data['dosen_nidn'] ?? ''));
+
+        if ($requireAtLeastOne && $nip === '' && $nidn === '') {
+            return [
+                'success' => false,
+                'message' => 'NIP atau NIDN wajib diisi salah satu',
+                'errors' => ['dosen_nidn' => 'NIP atau NIDN wajib diisi salah satu'],
+            ];
+        }
+
+        if ($nip !== '' && !preg_match('/^\d{18}$/', $nip)) {
+            return [
+                'success' => false,
+                'message' => 'NIP harus berupa angka 18 digit',
+                'errors' => ['dosen_nip' => 'NIP harus berupa angka 18 digit'],
+            ];
+        }
+
+        if ($nidn !== '' && !preg_match('/^\d{10}$/', $nidn)) {
+            return [
+                'success' => false,
+                'message' => 'NIDN harus berupa angka 10 digit',
+                'errors' => ['dosen_nidn' => 'NIDN harus berupa angka 10 digit'],
+            ];
         }
 
         return null;

@@ -35,7 +35,7 @@
                     <label class="font-weight-bold text-dark">NIP/NIDN</label>
                     <div class="d-flex align-items-center">
                         <i class="fas fa-id-card mr-2 text-primary"></i>
-                        <span class="text-secondary">{{ $dosen->dosen_nip_nidn }}</span>
+                        <span class="text-secondary">{{ $dosen->dosen_nip ?: $dosen->dosen_nidn }} @if($dosen->dosen_nip && $dosen->dosen_nidn)(NIDN: {{ $dosen->dosen_nidn }})@endif</span>
                     </div>
                 </div>
                 <div class="col-md-6 mb-4">

@@ -10,14 +10,20 @@
     <div class="modal-body">
         <div class="row">
                 
-                {{-- KOLOM KIRI (NIP/NIDN, Prodi, Username) --}}
+                {{-- KOLOM KIRI (NIP, NIDN, Prodi, Username) --}}
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="dosen_nip_nidn">NIP/NIDN</label>
-                        <input type="text" class="form-control" id="dosen_nip_nidn" name="dosen_nip_nidn" placeholder="NIP/NIDN Dosen" required>
-                        <small id="error_dosen_nip_nidn" class="error-text form-text text-danger"></small>
+                        <label for="dosen_nip">NIP</label>
+                        <input type="text" class="form-control" id="dosen_nip" name="dosen_nip" placeholder="NIP Dosen (18 digit, isi salah satu dengan NIDN)">
+                        <small id="error_dosen_nip" class="error-text form-text text-danger"></small>
                     </div>
-                    
+
+                    <div class="form-group">
+                        <label for="dosen_nidn">NIDN</label>
+                        <input type="text" class="form-control" id="dosen_nidn" name="dosen_nidn" placeholder="NIDN Dosen (10 digit, isi salah satu dengan NIP)">
+                        <small id="error_dosen_nidn" class="error-text form-text text-danger"></small>
+                    </div>
+
                     <div class="form-group">
                         <label for="prodi_id">Program Studi</label>
                         <select class="form-control" id="prodi_id" name="prodi_id" required>

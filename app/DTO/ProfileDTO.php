@@ -163,7 +163,7 @@ class ProfileDTO
             case 'DSN':
                 if ($user->dosen) {
                     $displayName = $user->dosen->dosen_nama;
-                    $personIdentifier = $user->dosen->dosen_nip_nidn;
+                    $personIdentifier = $user->dosen->identitasUtama(); // NIP diprioritaskan, fallback NIDN
                     $phoneNumber = $user->dosen->dosen_noHp;
                     if ($user->dosen->prodi) {
                         $prodiName = $user->dosen->prodi->prodi_nama;

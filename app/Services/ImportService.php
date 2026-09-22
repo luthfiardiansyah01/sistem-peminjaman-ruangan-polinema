@@ -116,12 +116,16 @@ class ImportService implements ImportServiceInterface
                     ];
                 }
 
+                // Kolom identifier tunggal di Excel: 18 digit dianggap NIP, selain itu NIDN
+                // (klien revisi ke-2 poin 4 konfirmasi panjang digit final per jenis).
+                $identitasField = strlen($nidn) === 18 ? 'dosen_nip' : 'dosen_nidn';
+
                 $this->userRepository->createDosen([
                     'username' => $nidn,
                     'password' => Hash::make($nidn),
                     'level_id' => $levelDosen->level_id,
                 ], [
-                    'dosen_nip_nidn' => $nidn,
+                    $identitasField => $nidn,
                     'dosen_nama' => $nama,
                     'dosen_noHp' => $noHp,
                     'prodi_id' => $prodiId,

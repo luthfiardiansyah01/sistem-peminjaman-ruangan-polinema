@@ -73,7 +73,7 @@
                 @foreach($dosens as $key => $dosen)
                 <tr>
                     <td>{{ $key + 1 }}.</td>
-                    <td>{{ $dosen->dosen_nip_nidn }}</td>
+                    <td>{{ $dosen->dosen_nip ?: $dosen->dosen_nidn }} @if($dosen->dosen_nip && $dosen->dosen_nidn)(NIDN: {{ $dosen->dosen_nidn }})@endif</td>
                     <td>{{ Str::limit($dosen->dosen_nama, 50, '...') }}</td>
                     <td>{{ $dosen->prodi ? $dosen->prodi->prodi_kode : '-' }}</td>
                     <td>{{ $dosen->dosen_noHp }}</td>

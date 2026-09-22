@@ -10,7 +10,7 @@
                         @if($role == 'MHS') NIM @else NIDN @endif
                     </label>
                     <input type="text" name="@if($role == 'MHS') nim @else nidn @endif" class="form-control" 
-                        value="@if($role == 'ADM') {{ $data->admin_nidn }} @elseif($role == 'DSN') {{ $data->dosen_nip_nidn }} @elseif($role == 'TDK') {{ $data->tendik_nidn }} @elseif($role == 'MHS') {{ $data->mahasiswa_nim }} @endif"
+                        value="@if($role == 'ADM') {{ $data->admin_nidn }} @elseif($role == 'DSN') {{ $data->identitasUtama() }} @elseif($role == 'TDK') {{ $data->tendik_nidn }} @elseif($role == 'MHS') {{ $data->mahasiswa_nim }} @endif"
                         readonly>
                     <small class="text-muted">Hubungi Admin untuk ubah NIM/NIDN.</small>
                 </div>
@@ -71,7 +71,7 @@
                         @if($role == 'MHS') NIM @else NIDN @endif
                     </label>
                     <input type="text" name="@if($role == 'MHS') nim @else nidn @endif" class="form-control" 
-                        value="@if($role == 'ADM') {{ $data->admin_nidn }} @elseif($role == 'DSN') {{ $data->dosen_nip_nidn }} @elseif($role == 'TDK') {{ $data->tendik_nidn }} @elseif($role == 'MHS') {{ $data->mahasiswa_nim }} @endif"
+                        value="@if($role == 'ADM') {{ $data->admin_nidn }} @elseif($role == 'DSN') {{ $data->identitasUtama() }} @elseif($role == 'TDK') {{ $data->tendik_nidn }} @elseif($role == 'MHS') {{ $data->mahasiswa_nim }} @endif"
                         readonly>
                     <small class="text-muted">Hubungi Admin untuk ubah NIM/NIDN.</small>
                 </div>
@@ -124,7 +124,7 @@
                         @if($role == 'MHS') NIM @else NIDN @endif
                     </label>
                     <input type="text" name="@if($role == 'MHS') nim @else nidn @endif" class="form-control" 
-                        value="@if($role == 'ADM') {{ $data->admin_nidn }} @elseif($role == 'DSN') {{ $data->dosen_nip_nidn }} @elseif($role == 'TDK') {{ $data->tendik_nidn }} @elseif($role == 'MHS') {{ $data->mahasiswa_nim }} @endif"
+                        value="@if($role == 'ADM') {{ $data->admin_nidn }} @elseif($role == 'DSN') {{ $data->identitasUtama() }} @elseif($role == 'TDK') {{ $data->tendik_nidn }} @elseif($role == 'MHS') {{ $data->mahasiswa_nim }} @endif"
                         readonly>
                     <small class="text-muted">Hubungi Admin untuk ubah NIM/NIDN.</small>
                 </div>

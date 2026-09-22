@@ -418,7 +418,14 @@ class CreateUserDTO
                 break;
                 
             case 'DSN':
-                $data['dosen_nip_nidn'] = $this->identifier;
+                // 18 digit dianggap NIP, selain itu NIDN (klien revisi ke-2 poin 4 konfirmasi
+                // panjang digit final per jenis; dosen_nip/dosen_nidn dua kolom terpisah
+                // karena dosen bisa punya keduanya sekaligus — lihat DosenModel).
+                if (strlen((string) $this->identifier) === 18) {
+                    $data['dosen_nip'] = $this->identifier;
+                } else {
+                    $data['dosen_nidn'] = $this->identifier;
+                }
                 $data['dosen_nama'] = $this->name;
                 $data['dosen_noHp'] = $this->phoneNumber;
                 $data['prodi_id'] = $this->prodiId;

@@ -12,7 +12,7 @@ class DosenModel extends Model
     use HasFactory;
     protected $table= 'm_dosen'; //mendefinisikan nama tabel yang akan digunakan
     protected $primaryKey = 'dosen_id';
-    protected $fillable = ['user_id', 'prodi_id', 'dosen_nama','dosen_nip_nidn','dosen_noHp','created_at','updated_at'];
+    protected $fillable = ['user_id', 'prodi_id', 'dosen_nama','dosen_nip','dosen_nidn','dosen_noHp','created_at','updated_at'];
 
     public function user(): BelongsTo
     {
@@ -35,13 +35,17 @@ class DosenModel extends Model
     {
         $errors = [];
         
-        // Validate NIP/NIDN format: field ini sekarang menyimpan salah satu dari dua jenis
-        // identitas dosen (klien revisi ke-2 poin 3). Aturan panjang digit final per jenis
-        // (NIDN 10 / NIP 18 — klien revisi ke-2 poin 4) BELUM diterapkan di sini karena masih
-        // perlu dikonfirmasi ulang oleh klien; range longgar existing (10-16 digit) dipertahankan
-        // sampai konfirmasi itu turun, supaya data/NIDN yang sudah ada tidak mendadak invalid.
-        if (!preg_match('/^\d{10,16}$/', $this->dosen_nip_nidn)) {
-            $errors['dosen_nip_nidn'] = 'NIP/NIDN harus berupa angka dengan panjang 10-16 digit';
+        // Validate NIP/NIDN: dosen bisa punya salah satu atau keduanya sekaligus (klien
+        // revisi ke-2 poin 3/4 konfirmasi) — minimal satu wajib diisi. Panjang digit final
+        // sudah dikonfirmasi klien: NIDN persis 10 digit, NIP persis 18 digit.
+        if (empty($this->dosen_nip) && empty($this->dosen_nidn)) {
+            $errors['dosen_nidn'] = 'NIP atau NIDN wajib diisi salah satu';
+        }
+        if (!empty($this->dosen_nip) && !preg_match('/^\d{18}$/', $this->dosen_nip)) {
+            $errors['dosen_nip'] = 'NIP harus berupa angka 18 digit';
+        }
+        if (!empty($this->dosen_nidn) && !preg_match('/^\d{10}$/', $this->dosen_nidn)) {
+            $errors['dosen_nidn'] = 'NIDN harus berupa angka 10 digit';
         }
         
         // Validate name (should not be empty)
@@ -84,12 +88,23 @@ class DosenModel extends Model
             'Dosen',
             $this->created_at ?? now(),
             $this->updated_at ?? now(),
-            $this->dosen_nip_nidn,
+            $this->identitasUtama(),
             $this->dosen_noHp,
             $this->prodi ? $this->prodi->prodi_nama : null
         );
     }
     
+    /**
+     * Identitas utama dosen: NIP diprioritaskan kalau ada, fallback ke NIDN kalau tidak
+     * (klien revisi ke-2 poin 4 konfirmasi — dosen bisa punya keduanya sekaligus).
+     *
+     * @return string|null
+     */
+    public function identitasUtama(): ?string
+    {
+        return $this->dosen_nip ?: $this->dosen_nidn;
+    }
+
     /**
      * Check if dosen teaches specific program study
      * 
@@ -112,7 +127,7 @@ class DosenModel extends Model
         return [
             'id' => $this->dosen_id,
             'name' => $this->dosen_nama,
-            'nidn' => $this->dosen_nip_nidn,
+            'nidn' => $this->identitasUtama(),
             'phone' => $this->dosen_noHp,
             'prodi' => $this->prodi ? $this->prodi->prodi_nama : null,
             'user' => $this->user ? [

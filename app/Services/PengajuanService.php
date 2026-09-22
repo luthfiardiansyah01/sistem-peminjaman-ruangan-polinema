@@ -668,7 +668,7 @@ class PengajuanService
             'panitias.user.tendik',
             'panitias.user.admin',
             // Rantai tanda tangan surat (FR-9.2): urutkan per tahap approval, lalu eager-load
-            // nama + NIDN/NIM penandatangan (dosen pakai dosen_nip_nidn, mahasiswa pakai mahasiswa_nim
+            // nama + NIP/NIDN/NIM penandatangan (dosen pakai dosen_nip/dosen_nidn, mahasiswa pakai mahasiswa_nim
             // — sistem ini tidak menyimpan NIP dosen, lihat DosenModel::$fillable).
             'approvals' => fn ($query) => $query->orderBy('urutan_tahap'),
             'approvals.jabatanApproval.user.dosen',

@@ -54,19 +54,19 @@
         $approvalUrut = $pengajuan->approvals->sortBy('urutan_tahap')->values();
         $tujuan = ['Ketua Jurusan Teknologi Informasi', 'Politeknik Negeri Malang'];
 
-        // Posisi approval yang identitasnya WAJIB tampil sebagai NIP (bukan NIDN) meski field
-        // dosen_nip_nidn sama-sama dipakai untuk keduanya — arahan klien revisi ke-2 poin 2.
-        // Ketiganya posisi dosen; posisi dosen lain (mis. Ketua Pelaksana dijabat dosen) tetap
-        // memakai label NIDN seperti semula karena tidak disebut klien.
-        $posisiPakaiNip = ['DPK', 'Ketua Jurusan', 'Wakil Direktur II'];
-
-        $identitas = function ($user, ?string $posisi = null) use ($posisiPakaiNip) {
+        // Identitas dosen: NIP diprioritaskan kalau ada, fallback ke NIDN kalau tidak (klien
+        // revisi ke-2 poin 4 konfirmasi — dosen bisa punya keduanya sekaligus). Sebelumnya
+        // (poin 2) label dipaksa "NIP." untuk posisi DPK/Ketua Jurusan/Wadir II karena field
+        // gabungan belum bisa membedakan; sekarang dosen_nip/dosen_nidn dua kolom terpisah
+        // (lihat DosenModel::identitasUtama()) jadi labelnya otomatis ikut data sebenarnya.
+        $identitas = function ($user) {
             if (!$user) {
                 return '-';
             }
             if ($user->dosen) {
-                $label = in_array($posisi, $posisiPakaiNip, true) ? 'NIP' : 'NIDN';
-                return $label . '. ' . $user->dosen->dosen_nip_nidn;
+                return $user->dosen->dosen_nip
+                    ? 'NIP. ' . $user->dosen->dosen_nip
+                    : 'NIDN. ' . $user->dosen->dosen_nidn;
             }
             if ($user->mahasiswa) {
                 return 'NIM. ' . $user->mahasiswa->mahasiswa_nim;
@@ -143,7 +143,7 @@
                             <p class="jabatan">{{ optional($jabatan)->posisi_approval ?? '-' }},</p>
                             <div class="spasi"></div>
                             <p class="nama">{{ optional(optional($jabatan)->user)->getDisplayName() ?? '-' }}</p>
-                            <p class="identitas">{{ $identitas(optional($jabatan)->user, optional($jabatan)->posisi_approval) }}</p>
+                            <p class="identitas">{{ $identitas(optional($jabatan)->user) }}</p>
                         </div>
                     </td>
                     @if($index % 2 === 1)
@@ -165,7 +165,7 @@
                             <p class="jabatan">{{ optional($jabatan)->posisi_approval ?? '-' }},</p>
                             <div class="spasi"></div>
                             <p class="nama">{{ optional(optional($jabatan)->user)->getDisplayName() ?? '-' }}</p>
-                            <p class="identitas">{{ $identitas(optional($jabatan)->user, optional($jabatan)->posisi_approval) }}</p>
+                            <p class="identitas">{{ $identitas(optional($jabatan)->user) }}</p>
                         </div>
                     </td>
                     @if($index % 2 === 1)
