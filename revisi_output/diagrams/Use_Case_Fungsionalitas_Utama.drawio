@@ -1,0 +1,177 @@
+<mxfile host="app.diagrams.net" scale="1" border="0">
+  <diagram id="uc2" name="Use Case Fungsionalitas Utama">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- System Boundary -->
+        <mxCell id="sys" value="Fungsionalitas Utama: Proses Peminjaman Ruangan" vertex="1" parent="1"
+          style="swimlane;startSize=30;html=1;fontSize=13;fontStyle=1;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;">
+          <mxGeometry x="160" y="40" width="830" height="730" as="geometry" />
+        </mxCell>
+
+        <!-- Actors -->
+        <mxCell id="act_p" value="Peminjam" vertex="1" parent="1"
+          style="shape=mxgraph.uml2.actor;html=1;strokeWidth=2;fontSize=12;verticalLabelPosition=bottom;verticalAlign=top;">
+          <mxGeometry x="50" y="340" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="act_v" value="Verifikator" vertex="1" parent="1"
+          style="shape=mxgraph.uml2.actor;html=1;strokeWidth=2;fontSize=12;verticalLabelPosition=bottom;verticalAlign=top;">
+          <mxGeometry x="1060" y="200" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="act_a" value="Admin" vertex="1" parent="1"
+          style="shape=mxgraph.uml2.actor;html=1;strokeWidth=2;fontSize=12;verticalLabelPosition=bottom;verticalAlign=top;">
+          <mxGeometry x="1060" y="500" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="act_s" value="Sistem" vertex="1" parent="1"
+          style="shape=mxgraph.uml2.actor;html=1;strokeWidth=2;fontSize=12;verticalLabelPosition=bottom;verticalAlign=top;">
+          <mxGeometry x="1060" y="650" width="60" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ── Sub-use case group: Pengajuan Peminjaman ── -->
+        <mxCell id="grp1" value="Pengajuan Peminjaman" vertex="1" parent="sys"
+          style="swimlane;startSize=25;html=1;fontSize=11;fontStyle=1;strokeWidth=1.5;strokeColor=#23547B;fillColor=#dae8fc;">
+          <mxGeometry x="30" y="60" width="350" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_login2" value="Login" vertex="1" parent="grp1"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="90" y="40" width="160" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_lihat_ruangan" value="Melihat Daftar Ruangan" vertex="1" parent="grp1"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="90" y="105" width="160" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_isi_form" value="Mengisi Formulir Pengajuan" vertex="1" parent="grp1"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="90" y="170" width="160" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_kirim" value="Mengirim Pengajuan" vertex="1" parent="grp1"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="90" y="215" width="160" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ── Sub-use case group: Verifikasi Pengajuan ── -->
+        <mxCell id="grp2" value="Verifikasi Pengajuan" vertex="1" parent="sys"
+          style="swimlane;startSize=25;html=1;fontSize=11;fontStyle=1;strokeWidth=1.5;strokeColor=#006EAF;fillColor=#dae8fc;">
+          <mxGeometry x="440" y="60" width="340" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_list_peng" value="Melihat Daftar Pengajuan" vertex="1" parent="grp2"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="85" y="40" width="160" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_terima" value="Menerima Pengajuan" vertex="1" parent="grp2"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="85" y="105" width="160" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_tolak" value="Menolak Pengajuan" vertex="1" parent="grp2"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="85" y="165" width="160" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ── Sub-use case group: Penyelesaian Peminjaman ── -->
+        <mxCell id="grp3" value="Penyelesaian Peminjaman" vertex="1" parent="sys"
+          style="swimlane;startSize=25;html=1;fontSize=11;fontStyle=1;strokeWidth=1.5;strokeColor=#3D7317;fillColor=#d5e8d4;">
+          <mxGeometry x="30" y="390" width="350" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_dok_penggunaan" value="Upload Foto Penggunaan" vertex="1" parent="grp3"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="80" y="40" width="180" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_dok_kebersihan" value="Upload Foto Kebersihan" vertex="1" parent="grp3"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="80" y="105" width="180" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_dok_kunci" value="Upload Foto Kunci" vertex="1" parent="grp3"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="80" y="170" width="180" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_kirim_dok" value="Mengirim Penyelesaian" vertex="1" parent="grp3"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="80" y="235" width="180" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ── Sub-use case group: Verifikasi Penyelesaian ── -->
+        <mxCell id="grp4" value="Verifikasi Penyelesaian (Admin)" vertex="1" parent="sys"
+          style="swimlane;startSize=25;html=1;fontSize=11;fontStyle=1;strokeWidth=1.5;strokeColor=#AE4132;fillColor=#ffe6cc;">
+          <mxGeometry x="440" y="340" width="340" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_list_selesai" value="Melihat Daftar Penyelesaian" vertex="1" parent="grp4"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="80" y="40" width="175" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_setujui_dok" value="Menyetujui Dokumentasi" vertex="1" parent="grp4"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="80" y="105" width="175" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_tolak_dok" value="Menolak Dokumentasi" vertex="1" parent="grp4"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="80" y="165" width="175" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ── Auto status – Sistem ── -->
+        <mxCell id="uc_auto2" value="Penetapan Status&#xa;Berlangsung (Otomatis)" vertex="1" parent="sys"
+          style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;">
+          <mxGeometry x="480" y="610" width="250" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ── include arrows ── -->
+        <mxCell id="inc1" value="&lt;&lt;include&gt;&gt;" edge="1" source="uc_isi_form" target="uc_login2" parent="grp1"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;html=1;strokeWidth=1.5;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc2" value="&lt;&lt;include&gt;&gt;" edge="1" source="uc_isi_form" target="uc_lihat_ruangan" parent="grp1"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;html=1;strokeWidth=1.5;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc3" value="&lt;&lt;include&gt;&gt;" edge="1" source="uc_kirim" target="uc_isi_form" parent="grp1"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;html=1;strokeWidth=1.5;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc4" value="&lt;&lt;extend&gt;&gt;" edge="1" source="uc_terima" target="uc_list_peng" parent="grp2"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;html=1;strokeWidth=1.5;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc5" value="&lt;&lt;extend&gt;&gt;" edge="1" source="uc_tolak" target="uc_list_peng" parent="grp2"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;html=1;strokeWidth=1.5;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc6" value="&lt;&lt;include&gt;&gt;" edge="1" source="uc_kirim_dok" target="uc_dok_penggunaan" parent="grp3"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;html=1;strokeWidth=1.5;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc7" value="&lt;&lt;include&gt;&gt;" edge="1" source="uc_kirim_dok" target="uc_dok_kebersihan" parent="grp3"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;html=1;strokeWidth=1.5;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc8" value="&lt;&lt;include&gt;&gt;" edge="1" source="uc_kirim_dok" target="uc_dok_kunci" parent="grp3"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;html=1;strokeWidth=1.5;fontSize=10;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ── Actor connections ── -->
+        <mxCell id="ea1" edge="1" source="act_p" target="grp1" parent="1"
+          style="html=1;strokeWidth=1.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea2" edge="1" source="act_p" target="grp3" parent="1"
+          style="html=1;strokeWidth=1.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea3" edge="1" source="act_v" target="grp2" parent="1"
+          style="html=1;strokeWidth=1.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea4" edge="1" source="act_a" target="grp4" parent="1"
+          style="html=1;strokeWidth=1.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea5" edge="1" source="act_s" target="uc_auto2" parent="1"
+          style="html=1;strokeWidth=1.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

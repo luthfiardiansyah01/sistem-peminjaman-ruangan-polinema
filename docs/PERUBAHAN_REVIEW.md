@@ -190,6 +190,16 @@ Verifikasi: `php -l` & `php artisan view:cache` lolos, migration sukses + data t
 pindah benar, `php artisan test` → **166 lolos, 4 gagal** (4 kegagalan sama seperti sebelumnya,
 sudah diverifikasi pre-existing & tidak terkait — lihat catatan poin 3 di atas).
 
+### Poin 5 lanjutan (2026-09-25) — surat jadi 3 halaman
+
+Klien tanya apakah surat bisa 2-3 halaman seperti template. Sebelumnya Lampiran 1 menempel di
+halaman 1 setelah surat (total 2 halaman). Di
+[`resources/views/pdf/surat_peminjaman.blade.php`](resources/views/pdf/surat_peminjaman.blade.php)
+class `.lampiran` ditambah `page-break-before: always` (dan `margin-top` dihapus), sehingga
+surat, Lampiran 1, dan Lampiran 2 masing-masing di halaman sendiri — sesuai "Lampiran: 2 (dua)
+Lembar" pada kop. Diverifikasi render PDF sungguhan (data uji sementara, sudah dihapus): tepat
+3 halaman.
+
 ### Klarifikasi poin 5 lanjutan (2026-09-22) — tidak ada perubahan kode
 
 Klien ditanya soal approver tambahan di template `FRM.BAA.03.18.00` yang sempat tertunda

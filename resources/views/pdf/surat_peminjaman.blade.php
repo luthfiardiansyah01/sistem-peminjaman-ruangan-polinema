@@ -25,7 +25,7 @@
         .ttd-blok .nama { margin: 0; font-weight: bold; text-decoration: underline; }
         .ttd-blok .identitas { margin: 0; }
         .cp { margin-top: 15px; font-size: 11px; }
-        .lampiran { margin-top: 25px; page-break-inside: avoid; }
+        .lampiran { page-break-before: always; page-break-inside: avoid; }
         .lampiran .lampiran-kop { margin: 0 0 10px 0; }
         .lampiran table { width: 100%; border-collapse: collapse; }
         .lampiran th, .lampiran td { border: 1px solid #000; padding: 6px; font-size: 11px; }
